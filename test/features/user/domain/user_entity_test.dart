@@ -113,7 +113,7 @@ void main() {
     );
 
     final expectedString =
-        'UserEntity(id: 1, name: Buddy, email: email@email.com, avatar: avatarteste, token: abc123, refreshToken: abc1234)';
+        "UserEntity(id: 1, name: Buddy, email: email@email.com, avatar: avatarteste, token: abc123, refreshToken: abc1234)";
 
     expect(user.toString(), expectedString);
   });
