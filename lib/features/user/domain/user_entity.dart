@@ -37,7 +37,7 @@ class UserEntity {
 
   @override
   String toString() {
-    return 'UserEntity(id: $id, name: $name, email: $email, token: $token, refreshToken: $refreshToken, avatar: $avatar)';
+    return 'UserEntity(id: $id, name: $name, email: $email, avatar: $avatar, token: $token, refreshToken: $refreshToken)';
   }
 
   UserEntity copyWith({
