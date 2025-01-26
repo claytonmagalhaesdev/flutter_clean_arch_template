@@ -6,7 +6,7 @@ class UserEntity {
   final String? token;
   final String? refreshToken;
 
-  UserEntity(
+  const UserEntity(
       {required this.id,
       required this.name,
       required this.email,

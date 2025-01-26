@@ -2,15 +2,15 @@ import 'package:flutter_clean_arch_template/core/commom/types/types.dart';
 import 'package:flutter_clean_arch_template/features/user/domain/user_entity.dart';
 
 class UserModel {
-  final String id;
-  final String name;
-  final String email;
-  final String? avatar;
-  final String? token;
-  final String? refreshToken;
+  String? id;
+  String name;
+  String email;
+  String? avatar;
+  String? token;
+  String? refreshToken;
 
   UserModel({
-    required this.id,
+    this.id,
     required this.name,
     required this.email,
     this.avatar,
@@ -42,7 +42,7 @@ class UserModel {
 
   UserEntity toEntity() {
     return UserEntity(
-      id: id,
+      id: id ?? '',
       name: name,
       email: email,
       avatar: avatar,
