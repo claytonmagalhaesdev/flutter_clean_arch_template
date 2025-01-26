@@ -1,4 +1,4 @@
-import 'package:flutter_clean_arch_template/core/commom/types/types.dart';
+import 'package:flutter_clean_arch_template/core/common/types/types.dart';
 import 'package:flutter_clean_arch_template/features/user/domain/user_entity.dart';
 
 class UserModel {

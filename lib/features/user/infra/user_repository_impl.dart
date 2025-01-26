@@ -1,9 +1,9 @@
-import 'package:flutter_clean_arch_template/core/commom/types/result.dart';
+import 'package:flutter_clean_arch_template/core/common/types/result.dart';
 import 'package:flutter_clean_arch_template/features/user/domain/user_entity.dart';
 import 'package:flutter_clean_arch_template/features/user/domain/user_repository.dart';
 
 class UserRepositoryImpl implements UserRepository {
-  
+
   @override
   Future<Result<List<UserEntity>>> getUsers() async {
     // Simulate a network request
