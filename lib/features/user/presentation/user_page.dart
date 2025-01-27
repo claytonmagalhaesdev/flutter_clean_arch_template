@@ -13,15 +13,10 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
-  late final FetchUsersCommand fetchUsersCommand;
-
   @override
   void initState() {
     super.initState();
-    fetchUsersCommand = FetchUsersCommand(widget.viewModel.userBloc);
-
-    // Executa o comando ao iniciar a página
-    fetchUsersCommand.execute();
+    widget.viewModel.fetchUsers();
   }
 
   @override

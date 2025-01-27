@@ -1,17 +1,16 @@
-import 'package:flutter_clean_arch_template/features/user/presentation/bloc/user_bloc.dart';
-import 'package:flutter_clean_arch_template/features/user/presentation/bloc/user_events.dart';
 import 'package:flutter_clean_arch_template/features/user/presentation/bloc/user_state.dart';
+import 'package:flutter_clean_arch_template/features/user/presentation/commands/fetch_users_command.dart';
 
 class UserViewModel {
-  final UserBloc userBloc;
+  final FetchUsersCommand fetchUsersCommand; // Usando o comando
 
-  UserViewModel(this.userBloc);
+  UserViewModel(this.fetchUsersCommand);
 
   // Expor estados
-  Stream<UserState> get userStateStream => userBloc.stream;
+  Stream<UserState> get userStateStream => fetchUsersCommand.userBloc.stream;
 
   // Expor ações como comandos
   void fetchUsers() {
-    userBloc.add(FetchUsers());
+    fetchUsersCommand.execute();
   }
 }
