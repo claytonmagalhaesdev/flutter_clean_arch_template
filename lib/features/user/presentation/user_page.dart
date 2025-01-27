@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_arch_template/features/user/presentation/bloc/user_state.dart';
-import 'package:flutter_clean_arch_template/features/user/presentation/commands/fetch_users_command.dart';
 import 'package:flutter_clean_arch_template/features/user/presentation/user_viewmodel.dart';
 
 class UserPage extends StatefulWidget {
