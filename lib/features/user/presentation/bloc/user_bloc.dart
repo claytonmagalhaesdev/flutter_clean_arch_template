@@ -9,15 +9,17 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   final GetUsersUseCase getUsersUsecase;
 
   UserBloc(this.getUsersUsecase) : super(UserInitial()) {
-    on<FetchUsers>((event, emit) async {
-      emit(UserLoading());
-      final Result result = await getUsersUsecase.execute();
+    on<FetchUsers>(_fetchUsers);
+  }
 
-      if (result.isSuccess) {
-        emit(UserLoaded(result.value!));
-      } else {
-        emit(UserError(result.errorMessage ?? "Erro desconhecido"));
-      }
-    });
+  Future<void> _fetchUsers(FetchUsers event, Emitter<UserState> emit) async {
+    emit(UserLoading());
+    final Result result = await getUsersUsecase.execute();
+
+    if (result.isSuccess) {
+      emit(UserLoaded(result.value!));
+    } else {
+      emit(UserError(result.errorMessage ?? "Erro desconhecido"));
+    }
   }
 }
