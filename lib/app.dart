@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_clean_arch_template/core/factories/make_user_page.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -12,7 +13,7 @@ class App extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Text('Flutter Demo Home'),
+      home: makeUserPage(),
     );
   }
 }
