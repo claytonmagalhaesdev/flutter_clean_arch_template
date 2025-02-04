@@ -8,19 +8,29 @@ import 'package:flutter_clean_arch_template/features/user/infra/user_model.dart'
 
 class UserRepositoryImpl implements UserRepository {
   final DioHttpClient _dio;
+  static const _baseUrl = 'https://jsonplaceholder.typicode.com';
 
   const UserRepositoryImpl({required DioHttpClient dio}) : _dio = dio;
 
   @override
   Future<Result<List<UserEntity>>> getUsers() async {
+    return _handleApiCall(() async {
+      final response = await _dio.get('$_baseUrl/users');
+      return _parseUsersList(response.data);
+    });
+  }
+
+  List<UserEntity> _parseUsersList(dynamic data) {
+    return (data as List)
+        .map((user) => UserModel.fromJson(user))
+        .map((user) => user.toEntity())
+        .toList();
+  }
+
+  Future<Result<T>> _handleApiCall<T>(Future<T> Function() apiCall) async {
     try {
-      final response =
-          await _dio.get('https://jsonplaceholder.typicode.com/users');
-      final users = (response.data as List)
-          .map((user) => UserModel.fromJson(user))
-          .toList();
-      final usersList = users.map((user) => user.toEntity()).toList();
-      return Result.ok(usersList);
+      final result = await apiCall();
+      return Result.ok(result);
     } on DioException catch (e) {
       return Result.error(
         NetworkFailure(
@@ -28,7 +38,6 @@ class UserRepositoryImpl implements UserRepository {
         ),
       );
     } catch (e) {
-      print(e.toString());
       return Result.error(UnknownFailure(e.toString()));
     }
   }
