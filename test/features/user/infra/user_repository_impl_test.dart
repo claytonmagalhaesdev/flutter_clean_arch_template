@@ -1,12 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_clean_arch_template/core/common/failures.dart';
+import 'package:flutter_clean_arch_template/core/common/network/http/dio/dio_http_client.dart';
 import 'package:flutter_clean_arch_template/core/common/types/result.dart';
 import 'package:flutter_clean_arch_template/features/user/infra/user_repository_impl.dart';
 import 'package:flutter_clean_arch_template/features/user/domain/user_entity.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-class MockDio extends Mock implements Dio {}
+class MockDio extends Mock implements DioHttpClient {}
 
 void main() {
   late UserRepositoryImpl userRepository;

@@ -1,14 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_clean_arch_template/core/common/failures.dart';
+import 'package:flutter_clean_arch_template/core/common/network/http/dio/dio_http_client.dart';
 import 'package:flutter_clean_arch_template/core/common/types/result.dart';
 import 'package:flutter_clean_arch_template/features/user/domain/user_entity.dart';
 import 'package:flutter_clean_arch_template/features/user/domain/user_repository.dart';
 import 'package:flutter_clean_arch_template/features/user/infra/user_model.dart';
 
 class UserRepositoryImpl implements UserRepository {
-  final Dio _dio;
+  final DioHttpClient _dio;
 
-  const UserRepositoryImpl({required Dio dio}) : _dio = dio;
+  const UserRepositoryImpl({required DioHttpClient dio}) : _dio = dio;
 
   @override
   Future<Result<List<UserEntity>>> getUsers() async {
@@ -21,9 +22,14 @@ class UserRepositoryImpl implements UserRepository {
       final usersList = users.map((user) => user.toEntity()).toList();
       return Result.ok(usersList);
     } on DioException catch (e) {
-      return Result.error(NetworkFailure(
-        e.response?.data['error'] ?? 'An unexpected error occurred.',
-      ));
+      return Result.error(
+        NetworkFailure(
+          e.response?.data['error'] ?? 'An unexpected error occurred.',
+        ),
+      );
+    } catch (e) {
+      print(e.toString());
+      return Result.error(UnknownFailure(e.toString()));
     }
   }
 }
