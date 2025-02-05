@@ -12,12 +12,14 @@ Widget makeUserPage() {
   final usecase = GetUsersUseCase(repo);
   final bloc = UserBloc(usecase);
   final viewModel = UserViewModel(bloc);
-  return UserPage(viewModel: viewModel,);
+  return UserPage(
+    viewModel: viewModel,
+  );
 }
 
 makeUserRepo() {
   final dio = Dio();
   final dioClient = DioHttpClient(dio);
-  final repo = UserRepositoryImpl(dio: dioClient);
+  final repo = UserRepositoryImpl(httpClient: dioClient);
   return repo;
 }

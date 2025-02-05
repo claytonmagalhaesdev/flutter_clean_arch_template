@@ -1,21 +1,22 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_clean_arch_template/core/common/failures.dart';
-import 'package:flutter_clean_arch_template/core/common/infra/network/http/dio/dio_http_client.dart';
+import 'package:flutter_clean_arch_template/core/common/infra/network/http/http_client.dart';
 import 'package:flutter_clean_arch_template/core/common/types/result.dart';
 import 'package:flutter_clean_arch_template/features/user/domain/user_entity.dart';
 import 'package:flutter_clean_arch_template/features/user/domain/user_repository.dart';
 import 'package:flutter_clean_arch_template/features/user/infra/user_model.dart';
 
 class UserRepositoryImpl implements UserRepository {
-  final DioHttpClient _dio;
+  final HttpClient _httpClient;
   static const _baseUrl = 'https://jsonplaceholder.typicode.com';
 
-  const UserRepositoryImpl({required DioHttpClient dio}) : _dio = dio;
+  const UserRepositoryImpl({required HttpClient httpClient})
+      : _httpClient = httpClient;
 
   @override
   Future<Result<List<UserEntity>>> getUsers() async {
     return _handleApiCall(() async {
-      final response = await _dio.get('$_baseUrl/users');
+      final response = await _httpClient.get('$_baseUrl/users');
       return _parseUsersList(response.data);
     });
   }

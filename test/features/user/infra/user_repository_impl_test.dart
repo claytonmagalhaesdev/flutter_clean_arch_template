@@ -15,7 +15,7 @@ void main() {
 
   setUp(() {
     mockDio = MockDio();
-    userRepository = UserRepositoryImpl(dio: mockDio);
+    userRepository = UserRepositoryImpl(httpClient: mockDio);
   });
 
   test('should return list of users when Dio call is successful', () async {
@@ -78,7 +78,8 @@ void main() {
         .called(1);
   });
 
-  test('should return UnknownFailure when Dio call throws unknown error', () async {
+  test('should return UnknownFailure when Dio call throws unknown error',
+      () async {
     // arrange
     when(() => mockDio.get(any())).thenThrow(Exception('Unknown error'));
 
@@ -88,6 +89,7 @@ void main() {
     // assert
     expect(result, isA<Error<List<UserEntity>>>());
     expect((result as Error<List<UserEntity>>).error, isA<UnknownFailure>());
-    verify(() => mockDio.get('https://jsonplaceholder.typicode.com/users')).called(1);
+    verify(() => mockDio.get('https://jsonplaceholder.typicode.com/users'))
+        .called(1);
   });
 }
