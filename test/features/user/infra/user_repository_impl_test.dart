@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_clean_arch_template/core/common/failures.dart';
+import 'package:flutter_clean_arch_template/core/common/infra/network/http/api_url_configs.dart';
 import 'package:flutter_clean_arch_template/core/common/infra/network/http/dio/dio_http_client.dart';
 import 'package:flutter_clean_arch_template/core/common/types/result.dart';
 import 'package:flutter_clean_arch_template/features/user/infra/user_repository_impl.dart';
@@ -7,15 +8,22 @@ import 'package:flutter_clean_arch_template/features/user/domain/user_entity.dar
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
+import '../../../mocks/fakes.dart';
+
 class MockDio extends Mock implements DioHttpClient {}
 
 void main() {
   late UserRepositoryImpl userRepository;
   late MockDio mockDio;
+  late ApiUrlConfigs apiUrlConfigs;
+  late String baseUrl;
 
   setUp(() {
     mockDio = MockDio();
-    userRepository = UserRepositoryImpl(httpClient: mockDio);
+    apiUrlConfigs = ApiConfigRepositoryImpl();
+    baseUrl = apiUrlConfigs.getBaseUrl('jsonplaceholder');
+    userRepository =
+        UserRepositoryImpl(httpClient: mockDio, apiConfig: apiUrlConfigs);
   });
 
   test('should return list of users when Dio call is successful', () async {
@@ -30,8 +38,7 @@ void main() {
       (_) async => Response(
         data: responseData,
         statusCode: 200,
-        requestOptions:
-            RequestOptions(path: 'https://jsonplaceholder.typicode.com/users'),
+        requestOptions: RequestOptions(path: anyString()),
       ),
     );
 
@@ -48,22 +55,21 @@ void main() {
         UserEntity(id: '2', name: 'Test User 2', email: '[email protected]'),
       ],
     );
-    verify(() => mockDio.get('https://jsonplaceholder.typicode.com/users'))
-        .called(1);
+    verify(() => mockDio.get('$baseUrl/users')).called(1);
   });
 
   test('should return NetworkFailure when Dio call fails', () async {
     // arrange
     when(() => mockDio.get(any())).thenThrow(
       DioException(
-        requestOptions:
-            RequestOptions(path: 'https://jsonplaceholder.typicode.com/users'),
+        requestOptions: RequestOptions(path: anyString()),
         type: DioExceptionType.badResponse,
         response: Response(
           statusCode: 404,
           data: {'error': 'Not Found'},
           requestOptions: RequestOptions(
-              path: 'https://jsonplaceholder.typicode.com/users'),
+            path: anyString(),
+          ),
         ),
       ),
     );
