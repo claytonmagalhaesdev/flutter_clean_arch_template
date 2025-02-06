@@ -20,7 +20,7 @@ class DioHttpClient extends HttpClient {
     try {
       final response = await _dio.get(url,
           queryParameters: queryParameters, options: Options(headers: headers));
-      return response.data;
+      return response;
     } on DioException catch (e) {
       if (e.error is Failure) {
         // Lançar a exceção genérica para a camada superior
