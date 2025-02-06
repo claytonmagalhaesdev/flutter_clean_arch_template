@@ -15,23 +15,10 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<Result<List<UserEntity>>> getUsers() async {
-    return _handleApiCall(() async {
-      final response = await _httpClient.get('$_baseUrl/users');
-      return _parseUsersList(response.data);
-    });
-  }
-
-  List<UserEntity> _parseUsersList(dynamic data) {
-    return (data as List)
-        .map((user) => UserModel.fromJson(user))
-        .map((user) => user.toEntity())
-        .toList();
-  }
-
-  Future<Result<T>> _handleApiCall<T>(Future<T> Function() apiCall) async {
     try {
-      final result = await apiCall();
-      return Result.ok(result);
+      final response = await _httpClient.get('$_baseUrl/users');
+      final data = UserModel.toEntityList(response.data);
+      return Result.ok(data);
     } on DioException catch (e) {
       return Result.error(
         NetworkFailure(

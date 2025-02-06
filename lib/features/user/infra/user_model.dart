@@ -50,4 +50,11 @@ class UserModel {
       refreshToken: refreshToken,
     );
   }
+
+  static List<UserEntity> toEntityList(data) {
+    return (data as List)
+        .map((user) => UserModel.fromJson(user))
+        .map((user) => user.toEntity())
+        .toList();
+  }
 }
