@@ -6,6 +6,6 @@ import 'package:flutter_clean_arch_template/core/app_module.dart';
 
 void main() {
   final DependencyInjector di = GetItDependencyInjector();
-  setupDependencies(di);
+  AppInjector().setupDependencies(di);
   runApp(App(di));
 }
