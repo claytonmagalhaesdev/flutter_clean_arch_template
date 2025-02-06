@@ -61,4 +61,13 @@ void main() {
       expect(result.refreshToken, userModel.refreshToken);
     });
   });
+
+  test('toEntityList should return a list of UserEntity', () {
+    final json = [userJson, userJsonMandatory];
+    final result = UserModel.toEntityList(json);
+    expect(result, isA<List<UserEntity>>());
+    expect(result.length, 2);
+    expect(result[0], isA<UserEntity>());
+    expect(result[1], isA<UserEntity>());
+  });
 }
