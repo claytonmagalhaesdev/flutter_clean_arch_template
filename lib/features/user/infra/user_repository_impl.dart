@@ -31,7 +31,6 @@ class UserRepositoryImpl implements UserRepository {
         ),
       );
     } catch (e) {
-      print(e.toString());
       return Result.error(UnknownFailure(e.toString()));
     }
   }
