@@ -2,7 +2,7 @@ import 'package:flutter_clean_arch_template/core/common/types/types.dart';
 import 'package:flutter_clean_arch_template/features/user/domain/user_entity.dart';
 
 class UserModel {
-  String? id;
+  int? id;
   String name;
   String email;
   String? avatar;
@@ -42,7 +42,7 @@ class UserModel {
 
   UserEntity toEntity() {
     return UserEntity(
-      id: id ?? '',
+      id: id ?? 0,
       name: name,
       email: email,
       avatar: avatar,

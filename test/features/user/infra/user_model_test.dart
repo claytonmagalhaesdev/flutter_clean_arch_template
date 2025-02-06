@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   final userJsonMandatory = {
-    'id': '1',
+    'id': 1,
     'name': 'Buddy',
     'email': 'email@email.com',
   };
@@ -17,7 +17,7 @@ void main() {
   };
 
   final userModel = UserModel(
-    id: '1',
+    id: 1,
     name: 'Buddy',
     email: 'email@email.com',
     avatar: 'avatar_teste',

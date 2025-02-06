@@ -20,8 +20,8 @@ void main() {
   test('should get list of users from repository', () async {
     // arrange
     final users = [
-      UserEntity(id: '1', name: 'Test User 1', email: '[email protected]'),
-      UserEntity(id: '2', name: 'Test User 2', email: '[email protected]')
+      UserEntity(id: 1, name: 'Test User 1', email: '[email protected]'),
+      UserEntity(id: 2, name: 'Test User 2', email: '[email protected]')
     ];
 
     when(() => mockUserRepository.getUsers())

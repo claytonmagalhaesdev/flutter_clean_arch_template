@@ -11,4 +11,4 @@ String anyIsoDate() => anyDate().toIso8601String();
 Json anyJson() => {anyString(): anyString()};
 JsonArray anyJsonArr() => List.generate(anyInt(5), (index) => anyJson());
 UserEntity anyPetEntity() =>
-    UserEntity(id: anyString(), name: anyString(), email: anyString());
+    UserEntity(id: anyInt(), name: anyString(), email: anyString());

@@ -29,8 +29,8 @@ void main() {
   test('should return list of users when Dio call is successful', () async {
     // arrange
     final responseData = [
-      {"id": "1", "name": "Test User 1", "email": "[email protected]"},
-      {"id": "2", "name": "Test User 2", "email": "[email protected]"}
+      {"id": 1, "name": "Test User 1", "email": "[email protected]"},
+      {"id": 2, "name": "Test User 2", "email": "[email protected]"}
     ];
 
     //interceptor fake response
@@ -51,8 +51,8 @@ void main() {
     expect(
       result.value,
       [
-        UserEntity(id: '1', name: 'Test User 1', email: '[email protected]'),
-        UserEntity(id: '2', name: 'Test User 2', email: '[email protected]'),
+        UserEntity(id: 1, name: 'Test User 1', email: '[email protected]'),
+        UserEntity(id: 2, name: 'Test User 2', email: '[email protected]'),
       ],
     );
     verify(() => mockDio.get('$baseUrl/users')).called(1);

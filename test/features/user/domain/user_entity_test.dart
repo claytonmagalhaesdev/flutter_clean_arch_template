@@ -5,7 +5,7 @@ void main() {
   group('UserEntity', () {
     test('should create a UserEntity with correct properties', () {
       final user = UserEntity(
-        id: '1',
+        id: 1,
         name: 'Tom Brady',
         email: 'email@email.com',
         avatar: 'avatar_teste',
@@ -13,7 +13,7 @@ void main() {
         refreshToken: "abc1234",
       );
 
-      expect(user.id, '1');
+      expect(user.id, 1);
       expect(user.name, 'Tom Brady');
       expect(user.email, 'email@email.com');
       expect(user.avatar, "avatar_teste");
@@ -23,7 +23,7 @@ void main() {
 
     test('should support value equality', () {
       final user1 = UserEntity(
-        id: '1',
+        id: 1,
         name: 'Buddy',
         email: 'email@email.com',
         avatar: 'avatar_teste',
@@ -32,7 +32,7 @@ void main() {
       );
 
       final user2 = UserEntity(
-        id: '1',
+        id: 1,
         name: 'Buddy',
         email: 'email@email.com',
         avatar: 'avatar_teste',
@@ -46,7 +46,7 @@ void main() {
 
   test('should create a copy with updated properties', () {
     final user = UserEntity(
-      id: '1',
+      id: 1,
       name: 'Buddy',
       email: 'email@email.com',
       avatar: 'avatar_teste',
@@ -59,7 +59,7 @@ void main() {
       email: "max@max.com",
     );
 
-    expect(updatedUser.id, '1');
+    expect(updatedUser.id, 1);
     expect(updatedUser.name, 'Max');
     expect(updatedUser.email, 'max@max.com');
     expect(updatedUser.avatar, 'avatar_teste');
@@ -69,7 +69,7 @@ void main() {
 
   test('should create a copy with no changes if no arguments are provided', () {
     final user = UserEntity(
-      id: '1',
+      id: 1,
       name: 'Buddy',
       email: 'email@email.com',
       avatar: 'avatar_teste',
@@ -84,7 +84,7 @@ void main() {
 
   test('should return correct hashCode', () {
     final user = UserEntity(
-      id: '1',
+      id: 1,
       name: 'Buddy',
       email: 'email@email.com',
       avatar: 'avatar_teste',
@@ -104,7 +104,7 @@ void main() {
 
   test('should return correct string (toString) representation', () {
     final user = UserEntity(
-      id: '1',
+      id: 1,
       name: 'Buddy',
       email: 'email@email.com',
       avatar: 'avatarteste',
