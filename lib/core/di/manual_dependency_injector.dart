@@ -9,19 +9,14 @@ import 'package:flutter_clean_arch_template/features/user/presentation/user_page
 import 'package:flutter_clean_arch_template/features/user/presentation/user_viewmodel.dart';
 
 Widget makeUserPage() {
-  final repo = makeUserRepo();
+  final dio = Dio();
+  final dioClient = DioHttpClient(dio);
+  final ApiUrlConfigs apiConfig = ApiConfigRepositoryImpl();
+  final repo = UserRepositoryImpl(httpClient: dioClient, apiConfig: apiConfig);
   final usecase = GetUsersUseCase(repo);
   final bloc = UserBloc(usecase);
   final viewModel = UserViewModel(bloc);
   return UserPage(
     viewModel: viewModel,
   );
-}
-
-makeUserRepo() {
-  final dio = Dio();
-  final dioClient = DioHttpClient(dio);
-  final ApiUrlConfigs apiConfig = ApiConfigRepositoryImpl();
-  final repo = UserRepositoryImpl(httpClient: dioClient, apiConfig: apiConfig);
-  return repo;
 }
