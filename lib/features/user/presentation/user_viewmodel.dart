@@ -1,4 +1,4 @@
-import 'package:flutter_clean_arch_template/core/common/types/command.dart';
+import 'package:flutter_clean_arch_template/core/command.dart';
 import 'package:flutter_clean_arch_template/core/common/types/result.dart';
 import 'package:flutter_clean_arch_template/features/user/presentation/bloc/user_bloc.dart';
 import 'package:flutter_clean_arch_template/features/user/presentation/bloc/user_events.dart';

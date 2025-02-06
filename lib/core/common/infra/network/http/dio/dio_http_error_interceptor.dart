@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_clean_arch_template/core/common/failures.dart';
+import 'package:flutter_clean_arch_template/core/common/types/failures.dart';
 
 //the interceptor to handle the errors using dio
 class DioInterceptor extends Interceptor {

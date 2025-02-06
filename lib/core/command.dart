@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 import 'dart:async';
-import 'result.dart';
+import 'common/types/result.dart';
 
 typedef CommandAction0<T> = Future<Result<T>> Function();
 typedef CommandAction1<T, A> = Future<Result<T>> Function(A);

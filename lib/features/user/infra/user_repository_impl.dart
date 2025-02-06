@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_clean_arch_template/core/common/failures.dart';
+import 'package:flutter_clean_arch_template/core/common/types/failures.dart';
 import 'package:flutter_clean_arch_template/core/common/infra/network/http/api_url_configs.dart';
 import 'package:flutter_clean_arch_template/core/common/infra/network/http/http_client.dart';
 import 'package:flutter_clean_arch_template/core/common/types/result.dart';
