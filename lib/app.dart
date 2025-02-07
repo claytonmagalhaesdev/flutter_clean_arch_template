@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_arch_template/core/common/services/init_localization_service.dart';
-import 'package:flutter_clean_arch_template/core/di/dependency_injector.dart';
-import 'package:flutter_clean_arch_template/features/user/presentation/user_page.dart';
+import 'package:flutter_clean_arch_template/features/auth/presentation/pages/login_page.dart';
 
 class App extends StatefulWidget {
-  final DependencyInjector di;
-
-  const App(this.di, {super.key});
+  const App({super.key});
 
   @override
   State<App> createState() => _AppState();
@@ -40,7 +37,7 @@ class _AppState extends State<App> {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: widget.di.get<UserPage>(),
+      home: LoginPage(),
     );
   }
 }
