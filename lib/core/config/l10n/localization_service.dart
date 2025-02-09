@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:flutter_clean_arch_template/core/common/types/enums.dart';
-import 'package:flutter_clean_arch_template/core/config/l10n/app_locale.dart';
+import 'package:flutter_clean_arch_template/core/config/l10n/app_translations.dart';
 
 class LocalizationService {
   late Map<String, String> _translations;
@@ -30,9 +30,9 @@ class LocalizationService {
 
     _localization.init(
       mapLocales: [
-        MapLocale(EnumLanguage.english.code, AppLocale.en),
-        MapLocale(EnumLanguage.portuguese.code, AppLocale.pt),
-        MapLocale(EnumLanguage.japanese.code, AppLocale.ja),
+        MapLocale(EnumLanguage.english.code, AppTranslations.en),
+        MapLocale(EnumLanguage.portuguese.code, AppTranslations.pt),
+        MapLocale(EnumLanguage.japanese.code, AppTranslations.ja),
       ],
       initLanguageCode: systemLocale.languageCode,
     );
@@ -46,11 +46,11 @@ class LocalizationService {
   Map<String, String> _getTranslationsForLocale(String languageCode) {
     switch (languageCode) {
       case 'pt':
-        return Map<String, String>.from(AppLocale.pt);
+        return Map<String, String>.from(AppTranslations.pt);
       case 'ja':
-        return Map<String, String>.from(AppLocale.ja);
+        return Map<String, String>.from(AppTranslations.ja);
       default:
-        return Map<String, String>.from(AppLocale.en);
+        return Map<String, String>.from(AppTranslations.en);
     }
   }
 

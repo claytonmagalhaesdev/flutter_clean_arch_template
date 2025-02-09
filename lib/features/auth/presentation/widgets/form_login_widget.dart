@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_clean_arch_template/core/config/l10n/app_locale.dart';
+import 'package:flutter_clean_arch_template/core/config/l10n/app_translations.dart';
 import 'package:flutter_clean_arch_template/core/config/l10n/localization_service.dart';
 import 'package:flutter_clean_arch_template/core/di/service_locator.dart';
 
@@ -28,7 +28,8 @@ class _SignInFormState extends State<SignInForm> {
             textInputAction: TextInputAction.next,
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
-              hintText: localizationService.getString(AppLocale.emailAddress),
+              hintText:
+                  localizationService.getString(AppTranslations.emailAddress),
             ),
           ),
 
@@ -37,7 +38,7 @@ class _SignInFormState extends State<SignInForm> {
             obscureText: _obscureText,
             onSaved: (value) {},
             decoration: InputDecoration(
-              hintText: localizationService.getString(AppLocale.password),
+              hintText: localizationService.getString(AppTranslations.password),
               suffixIcon: GestureDetector(
                 onTap: () {
                   setState(() {
@@ -62,7 +63,7 @@ class _SignInFormState extends State<SignInForm> {
                 }
               },
               child: Text(
-                localizationService.getString(AppLocale.signIn),
+                localizationService.getString(AppTranslations.signIn),
               ),
             ),
           ),

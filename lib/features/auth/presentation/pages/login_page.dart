@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_clean_arch_template/core/config/l10n/app_locale.dart';
+import 'package:flutter_clean_arch_template/core/config/l10n/app_translations.dart';
 import 'package:flutter_clean_arch_template/core/config/l10n/localization_service.dart';
 import 'package:flutter_clean_arch_template/core/di/service_locator.dart';
 
@@ -44,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       //welcome
                       Text(
-                        localizationService.getString(AppLocale.welcome),
+                        localizationService.getString(AppTranslations.welcome),
                         style: Theme.of(context)
                             .textTheme
                             .titleLarge!
@@ -57,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
                         onTap: () {},
                         child: Text(
                           localizationService
-                              .getString(AppLocale.forgetPassword),
+                              .getString(AppTranslations.forgetPassword),
                           style: Theme.of(context)
                               .textTheme
                               .bodySmall!
@@ -75,11 +75,11 @@ class _LoginPageState extends State<LoginPage> {
                                 .bodySmall!
                                 .copyWith(fontWeight: FontWeight.w600),
                             text: localizationService
-                                .getString(AppLocale.dontHaveAccount),
+                                .getString(AppTranslations.dontHaveAccount),
                             children: <TextSpan>[
                               TextSpan(
                                 text:
-                                    ' ${localizationService.getString(AppLocale.createNewAccount)}',
+                                    ' ${localizationService.getString(AppTranslations.createNewAccount)}',
                                 style:
                                     const TextStyle(color: Colors.blueAccent),
                                 recognizer: TapGestureRecognizer()

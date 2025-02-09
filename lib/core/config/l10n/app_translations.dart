@@ -1,4 +1,4 @@
-mixin AppLocale {
+mixin AppTranslations {
   static const title = 'AppTemplate';
   static const thisIs = 'This app is a study template for Flutter.';
   static const String welcome = 'Welcome';
