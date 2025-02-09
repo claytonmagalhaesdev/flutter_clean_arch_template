@@ -3,7 +3,6 @@ import 'package:flutter_clean_arch_template/core/common/infra/network/http/http_
 import 'package:flutter_clean_arch_template/core/common/types/failures.dart';
 import 'package:flutter_clean_arch_template/core/common/types/types.dart';
 
-//the implementation of the http client using dio
 class DioHttpClient extends HttpClient {
   final Dio _dio;
 
@@ -13,66 +12,39 @@ class DioHttpClient extends HttpClient {
       receiveTimeout: const Duration(seconds: 10),
     );
   }
-
   @override
   Future<dynamic> get(String url,
-      {Json? queryParameters, Map<String, String>? headers}) async {
-    try {
-      final response = await _dio.get(url,
-          queryParameters: queryParameters, options: Options(headers: headers));
-      return response;
-    } on DioException catch (e) {
-      if (e.error is Failure) {
-        // Lançar a exceção genérica para a camada superior
-        throw e.error ?? UnknownFailure('An unexpected error occurred.');
-      } else {
-        throw UnknownFailure('An unexpected error occurred.');
-      }
-    }
+      {Json? queryParameters, Map<String, String>? headers}) {
+    return _handleRequest(() => _dio.get(url,
+        queryParameters: queryParameters, options: Options(headers: headers)));
   }
 
   @override
-  Future<dynamic> post(String url,
-      {Json? data, Map<String, String>? headers}) async {
-    try {
-      final response =
-          await _dio.post(url, data: data, options: Options(headers: headers));
-      return response.data;
-    } on DioException catch (e) {
-      if (e.error is Failure) {
-        throw e.error ?? UnknownFailure('An unexpected error occurred.');
-      } else {
-        throw UnknownFailure('An unexpected error occurred.');
-      }
-    }
+  Future<Json> post(String url, {Json? data, Map<String, String>? headers}) {
+    return _handleRequest(
+        () => _dio.post(url, data: data, options: Options(headers: headers)));
   }
 
   @override
-  Future<Json> put(String url,
-      {Json? data, Map<String, String>? headers}) async {
-    try {
-      final response =
-          await _dio.put(url, data: data, options: Options(headers: headers));
-      return response.data;
-    } on DioException catch (e) {
-      if (e.error is Failure) {
-        throw e.error ?? UnknownFailure('An unexpected error occurred.');
-      } else {
-        throw UnknownFailure('An unexpected error occurred.');
-      }
-    }
+  Future<Json> put(String url, {Json? data, Map<String, String>? headers}) {
+    return _handleRequest(
+        () => _dio.put(url, data: data, options: Options(headers: headers)));
   }
 
   @override
   Future<void> delete(String url, {Map<String, String>? headers}) async {
+    await _handleRequest(
+        () => _dio.delete(url, options: Options(headers: headers)));
+  }
+
+  Future<T> _handleRequest<T>(Future<Response<T>> Function() request) async {
     try {
-      await _dio.delete(url, options: Options(headers: headers));
+      final response = await request();
+      return response as T;
     } on DioException catch (e) {
-      if (e.error is Failure) {
-        throw e.error ?? UnknownFailure('An unexpected error occurred.');
-      } else {
-        throw UnknownFailure('An unexpected error occurred.');
-      }
+      throw e.error is Failure
+          ? e.error!
+          : UnknownFailure('An unexpected error occurred.');
     }
   }
 }
