@@ -1,9 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_arch_template/core/config/l10n/app_locale.dart';
+import 'package:flutter_clean_arch_template/core/config/l10n/localization_service.dart';
+import 'package:flutter_clean_arch_template/core/di/service_locator.dart';
+
 import 'package:flutter_clean_arch_template/features/auth/presentation/widgets/form_login_widget.dart';
 import 'package:flutter_clean_arch_template/features/auth/presentation/widgets/switch_language_widget.dart';
-import 'package:flutter_localization/flutter_localization.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -13,8 +15,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  //localization.translate('en'); to change language on tap
-  final FlutterLocalization localization = FlutterLocalization.instance;
+  final localizationService = ServiceLocator.get<LocalizationService>();
 
   @override
   Widget build(BuildContext context) {
@@ -43,19 +44,20 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       //welcome
                       Text(
-                        AppLocale.welcome.getString(context),
+                        localizationService.getString(AppLocale.welcome),
                         style: Theme.of(context)
                             .textTheme
                             .titleLarge!
                             .copyWith(fontWeight: FontWeight.bold),
                       ),
                       //form
-                      const SignInForm(),
+                      SignInForm(),
                       //forgetPassword
                       GestureDetector(
                         onTap: () {},
                         child: Text(
-                          AppLocale.forgetPassword.getString(context),
+                          localizationService
+                              .getString(AppLocale.forgetPassword),
                           style: Theme.of(context)
                               .textTheme
                               .bodySmall!
@@ -72,11 +74,12 @@ class _LoginPageState extends State<LoginPage> {
                                 .textTheme
                                 .bodySmall!
                                 .copyWith(fontWeight: FontWeight.w600),
-                            text: AppLocale.dontHaveAccount.getString(context),
+                            text: localizationService
+                                .getString(AppLocale.dontHaveAccount),
                             children: <TextSpan>[
                               TextSpan(
                                 text:
-                                    ' ${AppLocale.createNewAccount.getString(context)}',
+                                    ' ${localizationService.getString(AppLocale.createNewAccount)}',
                                 style:
                                     const TextStyle(color: Colors.blueAccent),
                                 recognizer: TapGestureRecognizer()

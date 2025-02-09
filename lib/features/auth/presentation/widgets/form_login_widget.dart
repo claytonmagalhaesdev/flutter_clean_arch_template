@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_arch_template/core/config/l10n/app_locale.dart';
-import 'package:flutter_localization/flutter_localization.dart';
+import 'package:flutter_clean_arch_template/core/config/l10n/localization_service.dart';
+import 'package:flutter_clean_arch_template/core/di/service_locator.dart';
 
 class SignInForm extends StatefulWidget {
   const SignInForm({super.key});
@@ -10,6 +11,7 @@ class SignInForm extends StatefulWidget {
 }
 
 class _SignInFormState extends State<SignInForm> {
+  final localizationService = ServiceLocator.get<LocalizationService>();
   final _formKey = GlobalKey<FormState>();
 
   bool _obscureText = true;
@@ -26,7 +28,7 @@ class _SignInFormState extends State<SignInForm> {
             textInputAction: TextInputAction.next,
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
-              hintText: AppLocale.emailAddress.getString(context),
+              hintText: localizationService.getString(AppLocale.emailAddress),
             ),
           ),
 
@@ -35,7 +37,7 @@ class _SignInFormState extends State<SignInForm> {
             obscureText: _obscureText,
             onSaved: (value) {},
             decoration: InputDecoration(
-              hintText: AppLocale.password.getString(context),
+              hintText: localizationService.getString(AppLocale.password),
               suffixIcon: GestureDetector(
                 onTap: () {
                   setState(() {
@@ -60,7 +62,7 @@ class _SignInFormState extends State<SignInForm> {
                 }
               },
               child: Text(
-                AppLocale.signIn.getString(context),
+                localizationService.getString(AppLocale.signIn),
               ),
             ),
           ),
