@@ -35,7 +35,6 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
-                    spacing: 16.0,
                     children: [
                       const Spacer(),
                       //Logo

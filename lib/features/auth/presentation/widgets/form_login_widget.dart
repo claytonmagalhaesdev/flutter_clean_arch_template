@@ -21,7 +21,6 @@ class _SignInFormState extends State<SignInForm> {
     return Form(
       key: _formKey,
       child: Column(
-        spacing: 16.0,
         children: [
           TextFormField(
             onSaved: (value) {},
