@@ -44,6 +44,6 @@ Este projeto está licenciado sob a Licença MIT - consulte o arquivo [LICENSE](
 - padrões de projeto: Result, Command, Factory, dentre outros.
 
 
-FOntes:
+Fontes:
 
 get_it -> https://kilani-amine-96.medium.com/clean-architecture-on-flutter-with-getit-673baf3994ca
