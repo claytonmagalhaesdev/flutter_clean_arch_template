@@ -1,4 +1,4 @@
-class UserEntity {
+final class UserEntity {
   final int id;
   final String name;
   final String email;
@@ -27,34 +27,10 @@ class UserEntity {
           avatar == other.avatar;
 
   @override
-  int get hashCode =>
-      id.hashCode ^
-      name.hashCode ^
-      email.hashCode ^
-      token.hashCode ^
-      refreshToken.hashCode ^
-      avatar.hashCode;
+  int get hashCode => Object.hash(id, name, email, avatar, token, refreshToken);
 
   @override
   String toString() {
     return 'UserEntity(id: $id, name: $name, email: $email, avatar: $avatar, token: $token, refreshToken: $refreshToken)';
-  }
-
-  UserEntity copyWith({
-    int? id,
-    String? name,
-    String? email,
-    String? token,
-    String? refreshToken,
-    String? avatar,
-  }) {
-    return UserEntity(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      email: email ?? this.email,
-      token: token ?? this.token,
-      refreshToken: refreshToken ?? this.refreshToken,
-      avatar: avatar ?? this.avatar,
-    );
   }
 }

@@ -9,6 +9,6 @@ bool anyBool() => Random().nextBool();
 DateTime anyDate() => DateTime.fromMillisecondsSinceEpoch(anyInt());
 String anyIsoDate() => anyDate().toIso8601String();
 Json anyJson() => {anyString(): anyString()};
-JsonArray anyJsonArr() => List.generate(anyInt(5), (index) => anyJson());
+List<Json> anyJsonArr() => List.generate(anyInt(5), (index) => anyJson());
 UserEntity anyPetEntity() =>
     UserEntity(id: anyInt(), name: anyString(), email: anyString());
