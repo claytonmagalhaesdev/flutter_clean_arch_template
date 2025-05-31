@@ -1,2 +1,2 @@
 typedef Json = Map<String, dynamic>;
-typedef JsonArray = List<Map<String, dynamic>>;
+typedef JsonArr = List<Json>;

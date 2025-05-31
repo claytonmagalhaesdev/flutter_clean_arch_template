@@ -1,0 +1,25 @@
+import 'package:flutter_clean_arch_template/core/common/infra/mapper.dart';
+import 'package:flutter_clean_arch_template/core/common/types/types.dart';
+import 'user_dto.dart';
+
+class UserMapper implements Mapper<UserDto> {
+  @override
+  UserDto toDto(Json json) => UserDto(
+        id: json['id'],
+        name: json['name'],
+        email: json['email'],
+        avatar: json['avatar'],
+        token: json['token'],
+        refreshToken: json['refreshToken'],
+      );
+
+  @override
+  Json toJson(UserDto dto) => {
+        'id': dto.id,
+        'name': dto.name,
+        'email': dto.email,
+        'avatar': dto.avatar,
+        'token': dto.token,
+        'refreshToken': dto.refreshToken,
+      };
+}
