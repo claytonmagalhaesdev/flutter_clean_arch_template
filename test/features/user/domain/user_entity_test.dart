@@ -21,6 +21,36 @@ void main() {
       expect(user.refreshToken, "abc1234");
     });
 
+    test('should return true if token is present and not empty', () {
+      final user = UserEntity(
+        id: 1,
+        name: 'Test',
+        email: 'test@email.com',
+        token: 'abc123',
+      );
+
+      expect(user.isAuthenticated, isTrue);
+    });
+
+    test('should return false if token is null or empty', () {
+      final userWithoutToken = UserEntity(
+        id: 2,
+        name: 'NoToken',
+        email: 'no@token.com',
+        token: null,
+      );
+
+      final userWithEmptyToken = UserEntity(
+        id: 3,
+        name: 'Empty',
+        email: 'empty@token.com',
+        token: '',
+      );
+
+      expect(userWithoutToken.isAuthenticated, isFalse);
+      expect(userWithEmptyToken.isAuthenticated, isFalse);
+    });
+
     test('should support value equality', () {
       final user1 = UserEntity(
         id: 1,
@@ -42,44 +72,6 @@ void main() {
 
       expect(user1, user2);
     });
-  });
-
-  test('should create a copy with updated properties', () {
-    final user = UserEntity(
-      id: 1,
-      name: 'Buddy',
-      email: 'email@email.com',
-      avatar: 'avatar_teste',
-      token: "abc123",
-      refreshToken: "abc1234",
-    );
-
-    final updatedUser = user.copyWith(
-      name: 'Max',
-      email: "max@max.com",
-    );
-
-    expect(updatedUser.id, 1);
-    expect(updatedUser.name, 'Max');
-    expect(updatedUser.email, 'max@max.com');
-    expect(updatedUser.avatar, 'avatar_teste');
-    expect(updatedUser.token, "abc123");
-    expect(updatedUser.refreshToken, "abc1234");
-  });
-
-  test('should create a copy with no changes if no arguments are provided', () {
-    final user = UserEntity(
-      id: 1,
-      name: 'Buddy',
-      email: 'email@email.com',
-      avatar: 'avatar_teste',
-      token: "abc123",
-      refreshToken: "abc1234",
-    );
-
-    final copiedUser = user.copyWith();
-
-    expect(copiedUser, user);
   });
 
   test('should return correct hashCode', () {

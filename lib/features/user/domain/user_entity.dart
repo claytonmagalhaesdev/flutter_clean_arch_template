@@ -14,6 +14,9 @@ final class UserEntity {
       this.token,
       this.refreshToken});
 
+  /// Regras de domínio: usuário está autenticado se tiver token válido
+  bool get isAuthenticated => token != null && token!.isNotEmpty;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
