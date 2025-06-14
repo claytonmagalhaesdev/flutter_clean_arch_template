@@ -5,7 +5,6 @@ import 'package:flutter_clean_arch_template/core/config/l10n/localization_servic
 import 'package:flutter_clean_arch_template/core/di/service_locator.dart';
 
 import 'package:flutter_clean_arch_template/features/auth/presentation/widgets/form_login_widget.dart';
-import 'package:flutter_clean_arch_template/features/auth/presentation/widgets/switch_language_widget.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -90,9 +89,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
-                      const Spacer(),
-                      //change language
-                      SwitchLanguageWidget(),
+                  
                     ],
                   ),
                 ),

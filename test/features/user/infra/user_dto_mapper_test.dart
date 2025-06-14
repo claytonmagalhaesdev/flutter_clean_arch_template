@@ -1,6 +1,6 @@
-import 'package:flutter_clean_arch_template/features/user/infra/user_dto_mapper.dart';
+import 'package:flutter_clean_arch_template/features/users/infra/user_dto_mapper.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_clean_arch_template/features/user/infra/user_dto.dart';
+import 'package:flutter_clean_arch_template/features/users/infra/user_dto.dart';
 
 void main() {
   final mapper = UserDtoMapper();

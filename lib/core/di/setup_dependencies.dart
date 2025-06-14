@@ -3,13 +3,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter_clean_arch_template/core/config/l10n/localization_service.dart';
 import 'package:flutter_clean_arch_template/core/di/dependency_injector.dart';
 import 'package:flutter_clean_arch_template/core/common/infra/network/http/dio/dio_http_client.dart';
-import 'package:flutter_clean_arch_template/features/user/infra/user_dto_mapper.dart';
-import 'package:flutter_clean_arch_template/features/user/infra/user_entity_mapper.dart';
-import 'package:flutter_clean_arch_template/features/user/infra/user_repository_impl.dart';
-import 'package:flutter_clean_arch_template/features/user/domain/usecases/get_users_use_case.dart';
-import 'package:flutter_clean_arch_template/features/user/presentation/bloc/user_bloc.dart';
-import 'package:flutter_clean_arch_template/features/user/presentation/user_viewmodel.dart';
-import 'package:flutter_clean_arch_template/features/user/presentation/user_page.dart';
+import 'package:flutter_clean_arch_template/features/users/infra/user_dto_mapper.dart';
+import 'package:flutter_clean_arch_template/features/users/infra/user_entity_mapper.dart';
+import 'package:flutter_clean_arch_template/features/users/infra/user_repository_impl.dart';
+import 'package:flutter_clean_arch_template/features/users/domain/usecases/get_users_use_case.dart';
 import 'package:flutter_clean_arch_template/core/common/infra/network/http/api_url_configs.dart';
 
 void setupDependencies(DependencyInjector di) async {
@@ -39,13 +36,5 @@ void setupDependencies(DependencyInjector di) async {
   di.registerFactory<GetUsersUseCase>(
       () => GetUsersUseCase(di.get<UserRepositoryImpl>()));
 
-  // Bloc
-  di.registerFactory<UserBloc>(() => UserBloc(di.get<GetUsersUseCase>()));
-
-  // ViewModel
-  di.registerFactory<UserViewModel>(() => UserViewModel(di.get<UserBloc>()));
-
-  // Páginas
-  di.registerFactory<UserPage>(
-      () => UserPage(viewModel: di.get<UserViewModel>()));
+ 
 }

@@ -3,11 +3,11 @@ import 'package:flutter_clean_arch_template/core/common/types/failures.dart';
 import 'package:flutter_clean_arch_template/core/common/infra/network/http/api_url_configs.dart';
 import 'package:flutter_clean_arch_template/core/common/infra/network/http/http_client.dart';
 import 'package:flutter_clean_arch_template/core/common/types/result.dart';
-import 'package:flutter_clean_arch_template/features/user/domain/user_entity.dart';
-import 'package:flutter_clean_arch_template/features/user/domain/user_repository.dart';
-import 'package:flutter_clean_arch_template/features/user/infra/user_dto.dart';
-import 'package:flutter_clean_arch_template/features/user/infra/user_dto_mapper.dart';
-import 'package:flutter_clean_arch_template/features/user/infra/user_entity_mapper.dart';
+import 'package:flutter_clean_arch_template/features/users/domain/user_entity.dart';
+import 'package:flutter_clean_arch_template/features/users/domain/user_repository.dart';
+import 'package:flutter_clean_arch_template/features/users/infra/user_dto.dart';
+import 'package:flutter_clean_arch_template/features/users/infra/user_dto_mapper.dart';
+import 'package:flutter_clean_arch_template/features/users/infra/user_entity_mapper.dart';
 
 class UserRepositoryImpl implements UserRepository {
   final HttpClient _httpClient;

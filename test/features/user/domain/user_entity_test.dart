@@ -1,4 +1,4 @@
-import 'package:flutter_clean_arch_template/features/user/domain/user_entity.dart';
+import 'package:flutter_clean_arch_template/features/users/domain/user_entity.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

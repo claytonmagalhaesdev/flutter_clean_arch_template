@@ -1,6 +1,6 @@
 import 'package:flutter_clean_arch_template/core/common/domain/entity_mapper.dart';
-import 'package:flutter_clean_arch_template/features/user/domain/user_entity.dart';
-import 'package:flutter_clean_arch_template/features/user/infra/user_dto.dart';
+import 'package:flutter_clean_arch_template/features/users/domain/user_entity.dart';
+import 'package:flutter_clean_arch_template/features/users/infra/user_dto.dart';
 
 final class UserEntityMapper extends EntityListMapper<UserDto, UserEntity> {
   @override

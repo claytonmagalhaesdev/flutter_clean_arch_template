@@ -1,8 +1,8 @@
 import 'package:flutter_clean_arch_template/core/common/types/failures.dart';
 import 'package:flutter_clean_arch_template/core/common/types/result.dart';
-import 'package:flutter_clean_arch_template/features/user/domain/user_entity.dart';
-import 'package:flutter_clean_arch_template/features/user/domain/user_repository.dart';
-import 'package:flutter_clean_arch_template/features/user/domain/usecases/get_users_use_case.dart';
+import 'package:flutter_clean_arch_template/features/users/domain/user_entity.dart';
+import 'package:flutter_clean_arch_template/features/users/domain/user_repository.dart';
+import 'package:flutter_clean_arch_template/features/users/domain/usecases/get_users_use_case.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
