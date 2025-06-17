@@ -8,8 +8,9 @@ import 'package:flutter_clean_arch_template/features/users/infra/user_entity_map
 import 'package:flutter_clean_arch_template/features/users/infra/user_repository_impl.dart';
 import 'package:flutter_clean_arch_template/features/users/domain/usecases/get_users_use_case.dart';
 import 'package:flutter_clean_arch_template/core/common/infra/network/http/api_url_configs.dart';
+import 'package:flutter_clean_arch_template/features/users/presentation/users_cn_presenter.dart';
 import 'package:flutter_clean_arch_template/features/users/presentation/users_presenter.dart';
-import 'package:flutter_clean_arch_template/features/users/presentation/users_rx_presenter.dart';
+//import 'package:flutter_clean_arch_template/features/users/presentation/users_rx_presenter.dart';
 
 void setupDependencies(DependencyInjector di) async {
   // Internacionalização
@@ -38,7 +39,11 @@ void setupDependencies(DependencyInjector di) async {
   di.registerFactory<GetUsersUseCase>(
       () => GetUsersUseCase(di.get<UserRepositoryImpl>()));
 
+  // di.registerFactory<UsersPresenter>(
+  //   () => UsersRxPresenter(di.get<GetUsersUseCase>()),
+  // );
+
   di.registerFactory<UsersPresenter>(
-    () => UsersRxPresenter(di.get<GetUsersUseCase>()),
+    () => UsersChangeNotifierPresenter(di.get<GetUsersUseCase>()),
   );
 }

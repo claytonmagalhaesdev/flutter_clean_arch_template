@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_arch_template/features/users/presentation/user_model.dart';
-import 'package:flutter_clean_arch_template/features/users/presentation/user_state.dart';
+import 'package:flutter_clean_arch_template/features/users/presentation/users_state.dart';
 import 'users_presenter.dart';
 
 /// UI 100% declarativa: um só StreamBuilder e um comando

@@ -1,5 +1,5 @@
 import 'package:flutter_clean_arch_template/core/command.dart';
-import 'package:flutter_clean_arch_template/features/users/presentation/user_state.dart';
+import 'package:flutter_clean_arch_template/features/users/presentation/users_state.dart';
 
 /// Contrato de presenter: emite um único stream de estado e um comando.
 abstract class UsersPresenter {
@@ -8,4 +8,6 @@ abstract class UsersPresenter {
 
   /// Comando que dispara o carregamento de usuários
   Command0<void> get loadUsersCommand;
+
+   void dispose(); 
 }

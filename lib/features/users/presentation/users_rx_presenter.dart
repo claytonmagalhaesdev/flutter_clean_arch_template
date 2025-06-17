@@ -2,7 +2,7 @@
 
 import 'package:flutter_clean_arch_template/features/users/domain/usecases/get_users_use_case.dart';
 import 'package:flutter_clean_arch_template/features/users/presentation/user_model.dart';
-import 'package:flutter_clean_arch_template/features/users/presentation/user_state.dart';
+import 'package:flutter_clean_arch_template/features/users/presentation/users_state.dart';
 import 'package:flutter_clean_arch_template/features/users/presentation/users_presenter.dart';
 import 'package:flutter_clean_arch_template/features/users/presentation/users_viewmodel.dart';
 import 'package:rxdart/rxdart.dart';
@@ -42,5 +42,7 @@ class UsersRxPresenter implements UsersPresenter {
 
   @override
   Stream<UsersState> get stateStream => _ctrl.stream;
+
+  @override
   void dispose() => _ctrl.close();
 }
