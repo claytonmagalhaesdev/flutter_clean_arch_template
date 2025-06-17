@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_clean_arch_template/core/config/l10n/app_translations.dart';
 import 'package:flutter_clean_arch_template/core/config/l10n/localization_service.dart';
 import 'package:flutter_clean_arch_template/core/di/service_locator.dart';
+import 'package:flutter_clean_arch_template/features/users/presentation/users_page.dart';
+import 'package:flutter_clean_arch_template/features/users/presentation/users_presenter.dart';
 
 class SignInForm extends StatefulWidget {
   const SignInForm({super.key});
@@ -59,6 +61,12 @@ class _SignInFormState extends State<SignInForm> {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
                   //go to home page
+                  final presenter = ServiceLocator.get<UsersPresenter>();
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => UsersPage(presenter: presenter),
+                    ),
+                  );
                 }
               },
               child: Text(

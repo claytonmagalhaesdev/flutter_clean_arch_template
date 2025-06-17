@@ -1,120 +1,96 @@
-// lib/features/user/presentation/user_page.dart
+// lib/features/users/presentation/users_page.dart
 
 import 'package:flutter/material.dart';
-import 'package:flutter_clean_arch_template/features/users/presentation/users_presenter.dart';
-import 'package:flutter_clean_arch_template/features/users/presentation/users_viewmodel.dart';
+import 'package:flutter_clean_arch_template/features/users/presentation/user_model.dart';
+import 'package:flutter_clean_arch_template/features/users/presentation/user_state.dart';
+import 'users_presenter.dart';
 
-/// Tela que consome o [UserPresenter] e exibe a lista de usuários.
-class UserPage extends StatefulWidget {
+/// UI 100% declarativa: um só StreamBuilder e um comando
+class UsersPage extends StatefulWidget {
   final UsersPresenter presenter;
 
-  const UserPage({
-    super.key,
-    required this.presenter,
-  });
+  const UsersPage({Key? key, required this.presenter}) : super(key: key);
 
   @override
-  State<UserPage> createState() => _UserPageState();
+  State<UsersPage> createState() => _UsersPageState();
 }
 
-class _UserPageState extends State<UserPage> {
+class _UsersPageState extends State<UsersPage> {
   @override
   void initState() {
     super.initState();
-    widget.presenter.loadUsers();
-    widget.presenter.isBusyStream.listen((isBusy) {
-      if (isBusy) {
-        _showLoading();
-      } else {
-        _hideLoading();
-      }
-    });
-  }
-
-  void _showLoading() {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (_) => const SimpleDialog(
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 16),
-            child: Column(
-              children: [
-                Text('Carregando usuários…'),
-                SizedBox(height: 16),
-                CircularProgressIndicator(),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _hideLoading() {
-    if (Navigator.of(context).canPop()) {
-      Navigator.of(context).pop();
-    }
-  }
-
-  Widget _buildError() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text('Erro ao carregar usuários.'),
-          const SizedBox(height: 16),
-          ElevatedButton(
-            onPressed: () => widget.presenter.loadUsers(isReload: true),
-            child: const Text('RECARREGAR'),
-          ),
-        ],
-      ),
-    );
+    widget.presenter.loadUsersCommand.execute();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Usuários')),
-      body: StreamBuilder<UsersViewModel>(
-        stream: widget.presenter.usersStream,
+      body: StreamBuilder<UsersState>(
+        stream: widget.presenter.stateStream,
         builder: (context, snapshot) {
-          // Spinner inicial até o stream entrar no estado active
-          if (snapshot.connectionState != ConnectionState.active) {
+          final state = snapshot.data ?? const UsersInitial();
+
+          if (state is UsersInitial || state is UsersLoading) {
             return const Center(child: CircularProgressIndicator());
           }
-
-          // Se ocorrer erro, mostra o layout de erro
-          if (snapshot.hasError) {
-            return _buildError();
+          if (state is UsersError) {
+            return _buildError(state.message);
           }
-
-          final UsersViewModel vm = snapshot.data!;
-
-          // Se não houver usuários
-          if (vm.users.isEmpty) {
+          // state is UsersData
+          final vm = (state as UsersData).viewModel;
+          if (!vm.hasAny) {
             return const Center(child: Text('Nenhum usuário encontrado.'));
           }
-
-          // Exibe a lista
-          return ListView.separated(
-            itemCount: vm.users.length,
-            separatorBuilder: (_, __) => const Divider(),
-            itemBuilder: (_, index) {
-              final user = vm.users[index];
-              return ListTile(
-                leading: user.avatarUrl != null
-                    ? CircleAvatar(backgroundImage: NetworkImage(user.avatarUrl!))
-                    : CircleAvatar(child: Text(user.displayName[0])),
-                title: Text(user.displayName),
-                subtitle: Text(user.emailMasked),
-              );
-            },
+          return ListView(
+            children: [
+              if (vm.admins.isNotEmpty) ...[
+                _buildSectionTitle('Administradores'),
+                ...vm.admins.map(_buildTile),
+                const Divider(),
+              ],
+              if (vm.regulars.isNotEmpty) ...[
+                _buildSectionTitle('Regulares'),
+                ...vm.regulars.map(_buildTile),
+                const Divider(),
+              ],
+              if (vm.guests.isNotEmpty) ...[
+                _buildSectionTitle('Convidados'),
+                ...vm.guests.map(_buildTile),
+              ],
+            ],
           );
         },
       ),
     );
   }
+
+  Widget _buildError(String msg) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(msg),
+          const SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: () => widget.presenter.loadUsersCommand.execute(),
+            child: const Text('Recarregar'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSectionTitle(String title) => Padding(
+        padding: const EdgeInsets.all(8),
+        child: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+      );
+
+  Widget _buildTile(UserModel user) => ListTile(
+        leading: user.avatarUrl != null
+            ? CircleAvatar(backgroundImage: NetworkImage(user.avatarUrl!))
+            : const CircleAvatar(child: Icon(Icons.person)),
+        title: Text(user.displayName),
+        subtitle: Text(user.emailMasked),
+      );
 }

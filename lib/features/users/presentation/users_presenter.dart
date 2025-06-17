@@ -1,12 +1,11 @@
-import 'package:flutter_clean_arch_template/features/users/presentation/users_viewmodel.dart';
+import 'package:flutter_clean_arch_template/core/command.dart';
+import 'package:flutter_clean_arch_template/features/users/presentation/user_state.dart';
 
+/// Contrato de presenter: emite um único stream de estado e um comando.
 abstract class UsersPresenter {
-  /// Stream de ViewModels já mapeados
-  Stream<UsersViewModel> get usersStream;
+  /// Stream único de estados (initial, loading, data, error)
+  Stream<UsersState> get stateStream;
 
-  /// Para mostrar/hide loading
-  Stream<bool> get isBusyStream;
-
-  /// Dispara a carga (pode ter pagination, filtros…)
-  Future<void> loadUsers({bool isReload});
+  /// Comando que dispara o carregamento de usuários
+  Command0<void> get loadUsersCommand;
 }

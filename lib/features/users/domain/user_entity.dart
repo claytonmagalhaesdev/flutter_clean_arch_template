@@ -1,3 +1,5 @@
+import 'package:flutter_clean_arch_template/core/common/types/enums.dart';
+
 final class UserEntity {
   final int id;
   final String name;
@@ -5,11 +7,13 @@ final class UserEntity {
   final String? avatar;
   final String? token;
   final String? refreshToken;
+  final UserRole? role;
 
   const UserEntity(
       {required this.id,
       required this.name,
       required this.email,
+      this.role,
       this.avatar,
       this.token,
       this.refreshToken});
@@ -25,15 +29,17 @@ final class UserEntity {
           id == other.id &&
           name == other.name &&
           email == other.email &&
+          role == other.role &&
           token == other.token &&
           refreshToken == other.refreshToken &&
           avatar == other.avatar;
 
   @override
-  int get hashCode => Object.hash(id, name, email, avatar, token, refreshToken);
+  int get hashCode =>
+      Object.hash(id, name, email, role, avatar, token, refreshToken);
 
   @override
   String toString() {
-    return 'UserEntity(id: $id, name: $name, email: $email, avatar: $avatar, token: $token, refreshToken: $refreshToken)';
+    return 'UserEntity(id: $id, name: $name, email: $email, role: $role, avatar: $avatar, token: $token, refreshToken: $refreshToken)';
   }
 }

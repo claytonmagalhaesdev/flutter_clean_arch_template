@@ -1,17 +1,24 @@
 // domain/exceptions/failures.dart
 abstract class Failure implements Exception {
-  final String message;
-  const Failure(this.message);
+  String get message;
+  @override
+  String toString() => message;
 }
 
 class NetworkFailure extends Failure {
-  const NetworkFailure(super.message);
+  @override
+  final String message;
+  NetworkFailure(this.message);
 }
 
 class ServerFailure extends Failure {
-  const ServerFailure(super.message);
+  @override
+  final String message;
+  ServerFailure(this.message);
 }
 
 class UnknownFailure extends Failure {
-  const UnknownFailure(super.message);
+  @override
+  final String message;
+  UnknownFailure(this.message);
 }

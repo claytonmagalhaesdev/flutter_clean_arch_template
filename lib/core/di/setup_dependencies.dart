@@ -1,5 +1,6 @@
 // lib/app_module.dart
 import 'package:dio/dio.dart';
+import 'package:flutter_clean_arch_template/core/common/types/result.dart';
 import 'package:flutter_clean_arch_template/core/config/l10n/localization_service.dart';
 import 'package:flutter_clean_arch_template/core/di/dependency_injector.dart';
 import 'package:flutter_clean_arch_template/core/common/infra/network/http/dio/dio_http_client.dart';
@@ -8,6 +9,9 @@ import 'package:flutter_clean_arch_template/features/users/infra/user_entity_map
 import 'package:flutter_clean_arch_template/features/users/infra/user_repository_impl.dart';
 import 'package:flutter_clean_arch_template/features/users/domain/usecases/get_users_use_case.dart';
 import 'package:flutter_clean_arch_template/core/common/infra/network/http/api_url_configs.dart';
+import 'package:flutter_clean_arch_template/features/users/presentation/user_model.dart';
+import 'package:flutter_clean_arch_template/features/users/presentation/users_presenter.dart';
+import 'package:flutter_clean_arch_template/features/users/presentation/users_rx_presenter.dart';
 
 void setupDependencies(DependencyInjector di) async {
   // Internacionalização
@@ -36,5 +40,18 @@ void setupDependencies(DependencyInjector di) async {
   di.registerFactory<GetUsersUseCase>(
       () => GetUsersUseCase(di.get<UserRepositoryImpl>()));
 
- 
+  di.registerFactory<UsersPresenter>(() {
+    return UsersRxPresenter(
+      // você passa a função que carrega o List<UserModel>
+      usersLoader: () async {
+        final result = await di.get<GetUsersUseCase>().execute();
+        if (result.isSuccess) {
+          // mapeia Entity → UserModel
+          return result.value!.map((e) => UserModel.fromEntity(e)).toList();
+        } else {
+          throw Exception(result.errorMessage);
+        }
+      },
+    );
+  });
 }
