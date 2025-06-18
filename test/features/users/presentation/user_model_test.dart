@@ -1,3 +1,4 @@
+import 'package:flutter_clean_arch_template/features/users/presentation/user_role_extension.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_clean_arch_template/features/users/presentation/user_model.dart';
 import 'package:flutter_clean_arch_template/features/users/domain/user_entity.dart';
