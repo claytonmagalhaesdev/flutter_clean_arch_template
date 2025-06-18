@@ -1,5 +1,3 @@
-// lib/core/common/extensions/future_result_extension.dart
-
 import 'package:dio/dio.dart';
 import '../types/result.dart';
 import '../types/failures.dart';
