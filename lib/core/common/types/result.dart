@@ -37,5 +37,5 @@ extension ResultExtensions<T> on Result<T> {
       (this is Error<T>) ? (this as Error<T>).error.toString() : null;
 
   Exception? get exception =>
-      (this is Error<T>) ? (this as Error<T>).exception : null;
+      this is Error<T> ? (this as Error<T>).error : null;
 }
