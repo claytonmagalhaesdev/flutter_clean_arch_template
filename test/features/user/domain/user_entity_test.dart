@@ -1,3 +1,4 @@
+import 'package:flutter_clean_arch_template/core/common/types/enums.dart';
 import 'package:flutter_clean_arch_template/features/users/domain/user_entity.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -8,6 +9,7 @@ void main() {
         id: 1,
         name: 'Tom Brady',
         email: 'email@email.com',
+        role: UserRole.admin,
         avatar: 'avatar_teste',
         token: "abc123",
         refreshToken: "abc1234",
@@ -16,6 +18,7 @@ void main() {
       expect(user.id, 1);
       expect(user.name, 'Tom Brady');
       expect(user.email, 'email@email.com');
+      expect(user.role, UserRole.admin);
       expect(user.avatar, "avatar_teste");
       expect(user.token, "abc123");
       expect(user.refreshToken, "abc1234");
@@ -79,17 +82,21 @@ void main() {
       id: 1,
       name: 'Buddy',
       email: 'email@email.com',
+      role: UserRole.admin,
       avatar: 'avatar_teste',
       token: "abc123",
       refreshToken: "abc1234",
     );
 
-    final expectedHashCode = user.id.hashCode ^
-        user.name.hashCode ^
-        user.email.hashCode ^
-        user.avatar.hashCode ^
-        user.token.hashCode ^
-        user.refreshToken.hashCode;
+    final expectedHashCode = Object.hashAll([
+      user.id,
+      user.name,
+      user.email,
+      user.role,
+      user.avatar,
+      user.token,
+      user.refreshToken,
+    ]);
 
     expect(user.hashCode, expectedHashCode);
   });
@@ -99,13 +106,14 @@ void main() {
       id: 1,
       name: 'Buddy',
       email: 'email@email.com',
+      role: UserRole.admin,
       avatar: 'avatarteste',
       token: 'abc123',
       refreshToken: 'abc1234',
     );
 
     final expectedString =
-        "UserEntity(id: 1, name: Buddy, email: email@email.com, avatar: avatarteste, token: abc123, refreshToken: abc1234)";
+        "UserEntity(id: 1, name: Buddy, email: email@email.com, role: UserRole.admin, avatar: avatarteste, token: abc123, refreshToken: abc1234)";
 
     expect(user.toString(), expectedString);
   });
