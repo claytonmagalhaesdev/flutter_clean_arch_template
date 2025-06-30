@@ -1,0 +1,9 @@
+site_name: Documentação Flutter Clean Architecture
+
+theme:
+  name: material
+
+nav:
+  - Início: index.md
+  - Roteamento com Flutter: roteamento.md
+

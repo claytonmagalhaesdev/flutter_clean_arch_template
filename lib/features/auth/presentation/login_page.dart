@@ -4,10 +4,12 @@ import 'package:flutter_clean_arch_template/core/config/l10n/app_translations.da
 import 'package:flutter_clean_arch_template/core/config/l10n/localization_service.dart';
 import 'package:flutter_clean_arch_template/core/di/service_locator.dart';
 
-import 'package:flutter_clean_arch_template/features/auth/presentation/widgets/form_login_widget.dart';
+import 'package:flutter_clean_arch_template/features/auth/presentation/login_form_widget.dart';
+import 'package:flutter_clean_arch_template/features/auth/presentation/login_presenter.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  final LoginPresenter presenter;
+  const LoginPage({super.key, required this.presenter});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -32,10 +34,11 @@ class _LoginPageState extends State<LoginPage> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Column(
+                    mainAxisAlignment:
+                        MainAxisAlignment.center, // <- centraliza vertical
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
+                    mainAxisSize: MainAxisSize.max, // <- ocupa a altura toda
                     children: [
-                      const Spacer(),
                       //Logo
                       FlutterLogo(
                         size: MediaQuery.sizeOf(context).width * .4,
@@ -48,8 +51,16 @@ class _LoginPageState extends State<LoginPage> {
                             .titleLarge!
                             .copyWith(fontWeight: FontWeight.bold),
                       ),
+                      SizedBox(
+                        height: 16,
+                      ),
                       //form
-                      SignInForm(),
+                      SignInForm(
+                        presenter: widget.presenter,
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
                       //forgetPassword
                       GestureDetector(
                         onTap: () {},
@@ -89,7 +100,6 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
-                  
                     ],
                   ),
                 ),

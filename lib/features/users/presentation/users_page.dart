@@ -9,7 +9,7 @@ import 'users_presenter.dart';
 class UsersPage extends StatefulWidget {
   final UsersPresenter presenter;
 
-  const UsersPage({Key? key, required this.presenter}) : super(key: key);
+  const UsersPage({super.key, required this.presenter});
 
   @override
   State<UsersPage> createState() => _UsersPageState();
