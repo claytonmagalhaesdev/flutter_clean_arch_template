@@ -69,6 +69,7 @@ class _SignInFormState extends State<SignInForm> {
               return SizedBox(
                 width: MediaQuery.sizeOf(context).width,
                 child: ElevatedButton(
+                  key: const Key('login_button'),
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       _formKey.currentState!.save();

@@ -5,7 +5,6 @@ import 'package:flutter_clean_arch_template/features/users/presentation/user_mod
 import 'package:flutter_clean_arch_template/features/users/presentation/users_state.dart';
 import 'users_presenter.dart';
 
-/// UI 100% declarativa: um só StreamBuilder e um comando
 class UsersPage extends StatefulWidget {
   final UsersPresenter presenter;
 

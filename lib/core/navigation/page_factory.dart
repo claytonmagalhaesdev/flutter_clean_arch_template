@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_clean_arch_template/core/config/l10n/localization_service.dart';
 import 'package:flutter_clean_arch_template/core/di/service_locator.dart';
 import 'package:flutter_clean_arch_template/features/auth/presentation/login_presenter.dart';
 import 'package:flutter_clean_arch_template/features/users/presentation/users_page.dart';
@@ -10,8 +11,10 @@ typedef PageFactory = Widget Function([Object? arguments]);
 Map<String, PageFactory> buildPageFactories() => {
       '/users': ([arguments]) =>
           UsersPage(presenter: ServiceLocator.get<UsersPresenter>()),
-      '/login': ([arguments]) =>
-          LoginPage(presenter: ServiceLocator.get<LoginPresenter>()),
+      '/login': ([arguments]) => LoginPage(
+            presenter: ServiceLocator.get<LoginPresenter>(),
+            localizationService: ServiceLocator.get<LocalizationService>(),
+          ),
 
       //other routes can be added here
     };

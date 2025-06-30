@@ -172,7 +172,8 @@ Em seguida, no mesmo arquivo, definir o mapeamento de cada sring URL devolvendo 
 
 ```dart
 final pageFactories = <String, PageFactory>{
-  '/login': ([args]) => LoginPage(presenter: ServiceLocator.get<LoginPresenter>()),
+  '/login': ([args]) => LoginPage(presenter: ServiceLocator.get<LoginPresenter>(),
+            localizationService: ServiceLocator.get<LocalizationService>()),
   '/users': ([args]) => UsersPage(presenter: ServiceLocator.get<UsersPresenter>()),
 };
 ```
@@ -321,4 +322,23 @@ Navigator faz push/pop
 ---
 
 ## 9. Testes
+
+Com a estrutura dessa forma, podemos testar de todas formas e muito prático a navegação do nosso aplicativo.
+
+Teste presenter/unit:
+Mocka dependências e verifica interações.
+
+Teste do NavigationService:
+Pode ser unitário ou integração; garantir que as chamadas chegam ao Navigator/GoRouter/Outro.
+
+Teste de widget:
+Testa a UI isoladamente, mockando presenter.
+
+Teste de integração:
+Testa toda a jornada do usuário no app real.
+
+O segredo é:
+Cada camada só testa seu próprio comportamento e interação com dependências (mockando o que está “para fora”).
+
+
 

@@ -2,22 +2,21 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_arch_template/core/config/l10n/app_translations.dart';
 import 'package:flutter_clean_arch_template/core/config/l10n/localization_service.dart';
-import 'package:flutter_clean_arch_template/core/di/service_locator.dart';
 
 import 'package:flutter_clean_arch_template/features/auth/presentation/login_form_widget.dart';
 import 'package:flutter_clean_arch_template/features/auth/presentation/login_presenter.dart';
 
 class LoginPage extends StatefulWidget {
   final LoginPresenter presenter;
-  const LoginPage({super.key, required this.presenter});
+  final LocalizationService localizationService;
+  const LoginPage(
+      {super.key, required this.presenter, required this.localizationService});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final localizationService = ServiceLocator.get<LocalizationService>();
-
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -45,7 +44,8 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       //welcome
                       Text(
-                        localizationService.getString(AppTranslations.welcome),
+                        widget.localizationService
+                            .getString(AppTranslations.welcome),
                         style: Theme.of(context)
                             .textTheme
                             .titleLarge!
@@ -65,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
                       GestureDetector(
                         onTap: () {},
                         child: Text(
-                          localizationService
+                          widget.localizationService
                               .getString(AppTranslations.forgetPassword),
                           style: Theme.of(context)
                               .textTheme
@@ -83,12 +83,12 @@ class _LoginPageState extends State<LoginPage> {
                                 .textTheme
                                 .bodySmall!
                                 .copyWith(fontWeight: FontWeight.w600),
-                            text: localizationService
+                            text: widget.localizationService
                                 .getString(AppTranslations.dontHaveAccount),
                             children: <TextSpan>[
                               TextSpan(
                                 text:
-                                    ' ${localizationService.getString(AppTranslations.createNewAccount)}',
+                                    ' ${widget.localizationService.getString(AppTranslations.createNewAccount)}',
                                 style:
                                     const TextStyle(color: Colors.blueAccent),
                                 recognizer: TapGestureRecognizer()
