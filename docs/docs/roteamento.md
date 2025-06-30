@@ -323,7 +323,7 @@ Navigator faz push/pop
 
 ## 9. Testes
 
-Com a estrutura dessa forma, podemos testar de todas formas e muito prático a navegação do nosso aplicativo.
+Com essa estrutura podemos testar de diversas formas a navegação, seja de forma isolada ou por feature. Sejam testes de widget, unitários ou integração.
 
 **Teste do NavigationService:**
 Objetivo: garantir que as chamadas chegam ao Navigator/GoRouter/Outro.
