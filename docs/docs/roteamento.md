@@ -325,20 +325,56 @@ Navigator faz push/pop
 
 Com a estrutura dessa forma, podemos testar de todas formas e muito prático a navegação do nosso aplicativo.
 
-Teste presenter/unit:
-Mocka dependências e verifica interações.
+**Teste do NavigationService:**
+Pode ser unitário ou integração; 
+Objetivo: garantir que as chamadas chegam ao Navigator/GoRouter/Outro.
 
-Teste do NavigationService:
-Pode ser unitário ou integração; garantir que as chamadas chegam ao Navigator/GoRouter/Outro.
+Exemplos de testes:
+"should push the correct page when navigateTo is called"
 
-Teste de widget:
+Garante que, ao chamar navigationService.navigateTo('/mock'), o app navega para a rota esperada e o widget de destino (ex: Placeholder) aparece na tela.
+
+Daria pra adicionar outros possíveis, como teste de rotas inexistentes, goBack, etc.
+
+Exemplo em [test/core/navigation/navigation_service_impl_test.dart](https://github.com/claytonmagalhaesdev/flutter_clean_arch_template/blob/main/test/core/navigation/navigation_service_impl_test.dart) apenas adicionamos:
+
+
+**Teste presenter/unitário:**
+
+O que testa?
+Testa o Presenter isoladamente, simulando o NavigationService (mock). Confirma que, ao executar comandos como login/logout, o Presenter chama os métodos corretos do NavigationService.
+
+Exemplos de testes:
+
+'should navigate to /users when loginCommand is executed'
+Garante que o Presenter chama navigationService.navigateTo('/users') ao executar login.
+
+'should emit LoginLoading and then LoginSuccess state when loginCommand is executed'
+Testa os estados emitidos, que podem impactar na navegação.
+
+obs.: esses testes são os que estão relacionados à função de navegação, podendo ter ainda logout, etc..
+Nessa classe estarão outros testes de estado da tela, dados, etc..
+
+Exemplo em [test/features/auth/presentation/login_presenter_test.dart](https://github.com/claytonmagalhaesdev/flutter_clean_arch_template/blob/main/test/features/auth/presentation/login_presenter_test.dart) apenas adicionamos:
+
+
+**Teste de widget:**
 Testa a UI isoladamente, mockando presenter.
 
-Teste de integração:
-Testa toda a jornada do usuário no app real.
+O que testa?
+Verifica a interação entre a UI (LoginPage), o Presenter e o NavigationService/Command. Confirma que, ao clicar no botão de login, o Presenter executa o comando de login, que por sua vez pode disparar navegação.
 
-O segredo é:
-Cada camada só testa seu próprio comportamento e interação com dependências (mockando o que está “para fora”).
+Foca em:
+A ação de pressionar o botão dispara o comando correto. Se a UI reflete corretamente estados (ex: exibe CircularProgressIndicator em loading).
 
+Exemplos de testes:
+'should trigger loginCommand.execute when "login_button" button is tapped'
+Assegura que, ao clicar no botão de login, o comando do Presenter é chamado (que pode acionar navegação via service).
 
+'should display CircularProgressIndicator when state is LoginLoading'
+Não navega, mas testa o fluxo de loading — relevante no contexto geral do login.
+
+Obs.: aqui nessa classe terão testes de widgets em geral, esses citados se relacionam apenas com a abrangência da navegação.
+
+Exemplo em [test/features/auth/presentation/login_page_test.dart](https://github.com/claytonmagalhaesdev/flutter_clean_arch_template/blob/main/test/features/auth/presentation/login_page_test.dart) apenas adicionamos:
 
