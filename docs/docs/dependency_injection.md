@@ -136,6 +136,7 @@ final userUseCase = UserUseCase(userRepo); //envia o repo por DI
 Dessa forma, se você trocar de biblioteca de DI, ou de implementação, nenhuma classe interna precisa ser alterada, mantendo o código limpo, testável e flexível.
 
 Resumo:
+
 - O projeto nunca depende diretamente do GetIt fora do adaptador de injeção.
 - As dependências são recuperadas por meio do ServiceLocator, que chama o injector.
 
