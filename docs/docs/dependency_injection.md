@@ -115,22 +115,23 @@ class UserUseCase {
 
 Neste cenário, a classe depende de um detalhe de infraestrutura para funcionar — e isso a torna difícil de testar, migrar ou evoluir.
 
-Por isso criamos o "ServiceLocator"
-Para evitar esse acoplamento, criamos o ServiceLocator apenas no nível mais externo da aplicação (por exemplo, no main ou em widgets de inicialização), e nunca nas camadas internas (como use cases, entidades ou repositórios). Assim, as dependências são injetadas nas classes via construtor ou via métodos, ao invés de serem recuperadas diretamente por elas.
+Para evitar esse acoplamento, criamos o "ServiceLocator", apenas no nível mais externo da aplicação (por exemplo, no main ou em widgets de inicialização), e nunca nas camadas internas (como use cases, entidades ou repositórios). Assim, as dependências são injetadas nas classes via construtor ou via métodos, ao invés de serem recuperadas diretamente por elas.
+
+O ServiceLocator é como se fosse um get com tipo genérico onde pedimos para ele localizar a dependência que precisamos dentre as registradas. E registradas, leia-se pelo motor de injeção implementado no momento e que pode ser trocado. Ou seja, a classe que precisa nas camadas internas apenas pede ao ServiceLocator o que precisa e ele sem conhecer, utiliza a interface de injeção de dependência "DependencyInjector" e somente esta, conhece a real implementação.
 
 Exemplo correto:
 ```dart
-// AINDA ERRADO: classe interna conhece DependencyInjector
 class UserUseCase {
+  //precisamos do repo aqui ok?
   final UserRepository repo;
   UserUseCase(this.repo);
 
   Future<User> fetchUser(int id) => repo.getUser(id);
 }
 
-// E na camada externa (main ou widget raiz):
-final userRepo = ServiceLocator.get<UserRepository>();
-final userUseCase = UserUseCase(userRepo);
+// Na camada externa (main ou widget raiz):
+final userRepo = ServiceLocator.get<UserRepository>(); //obtem via ServiceLocator
+final userUseCase = UserUseCase(userRepo); //envia o repo por DI
 ```
 Dessa forma, se você trocar de biblioteca de DI, ou de implementação, nenhuma classe interna precisa ser alterada, mantendo o código limpo, testável e flexível.
 

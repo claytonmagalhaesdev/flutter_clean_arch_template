@@ -5,5 +5,6 @@ theme:
 
 nav:
   - Início: index.md
+  - Injeção/Inversão de dependências: dependency_injection.md
   - Roteamento com Flutter: roteamento.md
 
