@@ -7,6 +7,7 @@ A documentação é mantida junto ao código-fonte para garantir atualizações 
 
 ## Capítulos disponíveis
 
+- [Injeção/Inversão de dependências](dependency_injection.md)
 - [Roteamento com Flutter](roteamento.md)
 
 _Atualize este índice sempre que adicionar novos capítulos!_
