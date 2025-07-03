@@ -13,4 +13,5 @@ nav:
   - Core - Injeção/Inversão de dependências: dependency_injection.md
   - Core - Roteamento nomeado: roteamento.md
   - Config - Localização/Internacionalização: localization.md
+  - Config - Temas: themes.md
 

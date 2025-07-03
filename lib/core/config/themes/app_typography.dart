@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-class AppTypography {
+abstract final class AppTypography {
+  const AppTypography._();
+
   static const _fontFamily = 'Roboto';
 
   static const TextStyle displayLarge = TextStyle(
