@@ -2,22 +2,20 @@
 
 ## Visão Geral
 
-O projeto utiliza um padrão **desacoplado** e alinhado com boas práticas para definir e gerenciar os temas do aplicativo.\
+O projeto utiliza um padrão **desacoplado** e alinhado com boas práticas para definir e gerenciar os temas do aplicativo.
 Todas as cores, tipografia e estilos ficam centralizados, facilitando manutenção, expansão e testes.
 
 ---
 
 ## Estrutura Recomendada
 
-- `lib/theme/app_colors.dart`\
+- [`lib/core/config/themes/app_colors.dart`](https://github.com/claytonmagalhaesdev/flutter_clean_arch_template/blob/main/lib/core/config/themes/app_colors.dart)
   Define paletas de cores (light/dark).
-- `lib/theme/app_typography.dart`\
+- [`lib/core/config/themes/app_typography.dart`](https://github.com/claytonmagalhaesdev/flutter_clean_arch_template/blob/main/lib/core/config/themes/app_typography.dart)
   Define tipografia.
-- `lib/theme/app_theme.dart`\
+- [`lib/core/config/themes/app_theme.dart`](https://github.com/claytonmagalhaesdev/flutter_clean_arch_template/blob/main/lib/core/config/themes/app_typography.dart)
   Mapeia tudo para ThemeData do Flutter.
-- `lib/theme/extensions.dart`\
-  Extensões para ThemeData.
-- `lib/main.dart`\
+- `[lib/app.dart]`(https://github.com/claytonmagalhaesdev/flutter_clean_arch_template/blob/main/lib/app.dart)\
   Inicialização e gerenciamento dinâmico do tema.
 
 ---
@@ -29,7 +27,7 @@ Todas as cores, tipografia e estilos ficam centralizados, facilitando manutenç�
 Use uma `abstract final class` para impedir instância e garantir imutabilidade.
 
 ```dart
-// lib/theme/app_colors.dart
+// lib/core/config/themes/app_colors.dart
 abstract final class AppColors {
   const AppColors._(); // construtor privado, evita instâncias acidentais
 
@@ -46,7 +44,7 @@ abstract final class AppColors {
 Sempre use `const` para performance.
 
 ```dart
-// lib/theme/app_typography.dart
+// lib/core/config/themes/app_typography.dart
 abstract final class AppTypography {
   const AppTypography._();
 
@@ -66,7 +64,7 @@ abstract final class AppTypography {
 Definidos temas em uma única classe separada.
 
 ```dart
-// lib/theme/app_theme.dart
+// lib/core/config/themes/app_theme.dart
 final class AppTheme {
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true,
@@ -98,7 +96,6 @@ Permite acessar cores customizadas de acordo com o tema ativo, de forma desacopl
 Exemplo:
 
 ```dart
-// lib/theme/extensions.dart
 extension CustomTheme on ThemeData {
   Color get cardBorder => brightness == Brightness.dark
     ? AppColors.darkBackground
@@ -119,7 +116,7 @@ Container(
 ```
 ---
 
-Por fim, para usar essas classes no aplicativo, deve-se usar dentro do MaterialApp, widget root, da forma como está no projetp
+Por fim, para usar essas classes no aplicativo, deve-se usar dentro do MaterialApp, widget root, da forma como está no projeto
 
 ```dart
 return MaterialApp(

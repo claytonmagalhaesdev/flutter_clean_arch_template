@@ -1,15 +1,11 @@
-site_name: Documentação Flutter Clean Architecture
+site_name: Documentação
 
 theme:
   name: material
 
 nav:
   - Início: index.md
-  - Clean Arch - Domain:
-  - Clean Arch - Infra/Data:
-  - Clean Arch - Presentation:
-  - Core - Mappers:
-  - Core - Network (HTTP) layer:
+
   - Core - Injeção/Inversão de dependências: dependency_injection.md
   - Core - Roteamento nomeado: roteamento.md
   - Config - Localização/Internacionalização: localization.md

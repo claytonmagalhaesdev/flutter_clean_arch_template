@@ -10,5 +10,3 @@ A documentação é mantida junto ao código-fonte para garantir atualizações 
 - [Injeção/Inversão de dependências](dependency_injection.md)
 - [Roteamento com Flutter](roteamento.md)
 - [Temas](themes.md)
-
-_Atualize este índice sempre que adicionar novos capítulos!_
