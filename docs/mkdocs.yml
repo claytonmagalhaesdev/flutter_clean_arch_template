@@ -5,6 +5,12 @@ theme:
 
 nav:
   - Início: index.md
-  - Injeção/Inversão de dependências: dependency_injection.md
-  - Roteamento com Flutter: roteamento.md
+  - Clean Arch - Domain:
+  - Clean Arch - Infra/Data:
+  - Clean Arch - Presentation:
+  - Core - Mappers:
+  - Core - Network (HTTP) layer:
+  - Core - Injeção/Inversão de dependências: dependency_injection.md
+  - Core - Roteamento nomeado: roteamento.md
+  - Config - Localização/Internacionalização: localization.md
 

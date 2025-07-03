@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_arch_template/core/config/l10n/localization_service.dart';
+import 'package:flutter_clean_arch_template/core/config/themes/app_themes.dart';
 import 'package:flutter_clean_arch_template/core/di/service_locator.dart';
 import 'package:flutter_clean_arch_template/core/navigation/page_factory.dart';
 
@@ -27,10 +28,9 @@ class _AppState extends State<App> {
           localizationService.instanceLocalization.localizationsDelegates,
       debugShowCheckedModeBanner: false,
       title: 'Flutter Template',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.system,
       home: pageFactories['/login']!(),
     );
   }
