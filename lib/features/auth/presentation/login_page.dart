@@ -33,10 +33,9 @@ class _LoginPageState extends State<LoginPage> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Column(
-                    mainAxisAlignment:
-                        MainAxisAlignment.center, // <- centraliza vertical
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max, // <- ocupa a altura toda
+                    mainAxisSize: MainAxisSize.max,
                     children: [
                       //Logo
                       FlutterLogo(
@@ -44,6 +43,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       //welcome
                       Text(
+                        key: Key('welcome_text'),
                         widget.localizationService
                             .getString(AppTranslations.welcome),
                         style: Theme.of(context)
@@ -57,6 +57,7 @@ class _LoginPageState extends State<LoginPage> {
                       //form
                       SignInForm(
                         presenter: widget.presenter,
+                        localizationService: widget.localizationService,
                       ),
                       SizedBox(
                         height: 16,

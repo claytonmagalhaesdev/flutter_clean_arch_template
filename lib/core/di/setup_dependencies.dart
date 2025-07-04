@@ -27,8 +27,8 @@ void setupDependencies(DependencyInjector di) async {
   // page factories
   di.registerSingleton<Map<String, PageFactory>>(buildPageFactories());
 
-  // Internacionalization
-  final localizationService = LocalizationService.instance;
+  // Internacionalization instance
+  final localizationService = LocalizationServiceImpl.instance;
   di.registerSingleton<LocalizationService>(localizationService);
 
   await localizationService.initialize();

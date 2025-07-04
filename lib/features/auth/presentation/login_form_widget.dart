@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_arch_template/core/config/l10n/app_translations.dart';
 import 'package:flutter_clean_arch_template/core/config/l10n/localization_service.dart';
-import 'package:flutter_clean_arch_template/core/di/service_locator.dart';
 import 'package:flutter_clean_arch_template/features/auth/presentation/login_presenter.dart';
 import 'package:flutter_clean_arch_template/features/auth/presentation/login_state.dart';
 
 class SignInForm extends StatefulWidget {
   final LoginPresenter presenter;
+  final LocalizationService localizationService;
 
-  const SignInForm({super.key, required this.presenter});
+  const SignInForm(
+      {super.key, required this.presenter, required this.localizationService});
 
   @override
   State<SignInForm> createState() => _SignInFormState();
 }
 
 class _SignInFormState extends State<SignInForm> {
-  final localizationService = ServiceLocator.get<LocalizationService>();
   final _formKey = GlobalKey<FormState>();
 
   bool _obscureText = true;
@@ -31,8 +31,8 @@ class _SignInFormState extends State<SignInForm> {
             textInputAction: TextInputAction.next,
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
-              hintText:
-                  localizationService.getString(AppTranslations.emailAddress),
+              hintText: widget.localizationService
+                  .getString(AppTranslations.emailAddress),
             ),
           ),
 
@@ -41,7 +41,8 @@ class _SignInFormState extends State<SignInForm> {
             obscureText: _obscureText,
             onSaved: (value) {},
             decoration: InputDecoration(
-              hintText: localizationService.getString(AppTranslations.password),
+              hintText: widget.localizationService
+                  .getString(AppTranslations.password),
               suffixIcon: GestureDetector(
                 onTap: () {
                   setState(() {
@@ -77,7 +78,8 @@ class _SignInFormState extends State<SignInForm> {
                     }
                   },
                   child: Text(
-                    localizationService.getString(AppTranslations.signIn),
+                    widget.localizationService
+                        .getString(AppTranslations.signIn),
                   ),
                 ),
               );
