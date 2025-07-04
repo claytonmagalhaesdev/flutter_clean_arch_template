@@ -333,7 +333,9 @@ Exemplo de teste de navegação:
 
 Garante que ao chamar navigationService.navigateTo('/mock'), o app navega para a rota esperada e o widget de destino (ex: Placeholder) aparece na tela.
 
-Completo em [test/core/navigation/navigation_service_impl_test.dart](https://github.com/claytonmagalhaesdev/flutter_clean_arch_template/blob/main/test/core/navigation/navigation_service_impl_test.dart) apenas adicionamos:
+Completo em [test/core/navigation/navigation_service_impl_test.dart](https://github.com/claytonmagalhaesdev/flutter_clean_arch_template/blob/main/test/core/navigation/navigation_service_impl_test.dart) 
+
+Outro teste simples em: [test/core/navigation/page_factory_test.dart](https://github.com/claytonmagalhaesdev/flutter_clean_arch_template/blob/main/test/core/navigation/page_factory_test.dart) onde apenas testa-se o mapeamento correto string vs rota.
 
 
 **Teste presenter/unitário:**
@@ -346,7 +348,7 @@ Exemplo de teste de navegação:
 'should navigate to /users when loginCommand is executed'
 Garante que o Presenter chama navigationService.navigateTo('/users') ao executar login.
 
-Completo: [test/features/auth/presentation/login_presenter_test.dart](https://github.com/claytonmagalhaesdev/flutter_clean_arch_template/blob/main/test/features/auth/presentation/login_presenter_test.dart) apenas adicionamos:
+Completo: [test/features/auth/presentation/login_presenter_test.dart](https://github.com/claytonmagalhaesdev/flutter_clean_arch_template/blob/main/test/features/auth/presentation/login_presenter_test.dart) 
 
 
 **Teste de widget:**
@@ -357,5 +359,5 @@ Exemplo de testede navegação:
 'should trigger loginCommand.execute when "login_button" button is tapped'
 Assegura que, ao clicar no botão de login, o comando do Presenter é chamado (que pode acionar navegação via service).
 
-Completo em [test/features/auth/presentation/login_page_test.dart](https://github.com/claytonmagalhaesdev/flutter_clean_arch_template/blob/main/test/features/auth/presentation/login_page_test.dart) apenas adicionamos:
+Completo em [test/features/auth/presentation/login_page_test.dart](https://github.com/claytonmagalhaesdev/flutter_clean_arch_template/blob/main/test/features/auth/presentation/login_page_test.dart)
 
