@@ -4,21 +4,24 @@ import 'package:flutter_localization/flutter_localization.dart';
 import 'package:flutter_clean_arch_template/core/common/types/enums.dart';
 import 'package:flutter_clean_arch_template/core/config/l10n/app_translations.dart';
 
-class LocalizationService {
+//interface for localization service
+abstract class LocalizationService {
+  Future<void> initialize();
+  String getString(String key);
+  FlutterLocalization get instanceLocalization;
+}
+
+//implementation of localization service
+class LocalizationServiceImpl implements LocalizationService {
   late Map<String, String> _translations;
 
-  static final LocalizationService instance = LocalizationService._();
+  static final LocalizationServiceImpl instance = LocalizationServiceImpl._();
 
   final FlutterLocalization _localization = FlutterLocalization.instance;
 
-  // StreamController para notificar mudanças de idioma
-  final StreamController<String> _localeController =
-      StreamController.broadcast();
+  LocalizationServiceImpl._();
 
-  Stream<String> get localeStream => _localeController.stream;
-
-  LocalizationService._();
-
+  @override
   Future<void> initialize() async {
     await _localization.ensureInitialized();
     _initLocalization();
@@ -54,22 +57,11 @@ class LocalizationService {
     }
   }
 
+  @override
   String getString(String key) {
     return _translations[key] ?? key;
   }
 
-  // ✅ Agora notifica o StreamController ao mudar o idioma
-  void changeLocale(String languageCode) {
-    _localization.translate(languageCode);
-    _translations = _getTranslationsForLocale(languageCode);
-    _localeController.add(languageCode); // 🔥 Notifica ouvintes sobre a mudança
-  }
-
-  String get currentLocale => _localization.currentLocale?.languageCode ?? 'en';
-
+  @override
   FlutterLocalization get instanceLocalization => _localization;
-
-  void dispose() {
-    _localeController.close();
-  }
 }

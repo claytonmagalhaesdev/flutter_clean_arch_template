@@ -5,11 +5,10 @@ import 'package:flutter_clean_arch_template/features/users/presentation/user_mod
 import 'package:flutter_clean_arch_template/features/users/presentation/users_state.dart';
 import 'users_presenter.dart';
 
-/// UI 100% declarativa: um só StreamBuilder e um comando
 class UsersPage extends StatefulWidget {
   final UsersPresenter presenter;
 
-  const UsersPage({Key? key, required this.presenter}) : super(key: key);
+  const UsersPage({super.key, required this.presenter});
 
   @override
   State<UsersPage> createState() => _UsersPageState();

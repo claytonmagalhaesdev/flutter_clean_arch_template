@@ -1,4 +1,4 @@
-mixin AppTranslations {
+abstract class AppTranslations {
   static const title = 'AppTemplate';
   static const thisIs = 'This app is a study template for Flutter.';
   static const String welcome = 'Welcome';
@@ -27,12 +27,12 @@ mixin AppTranslations {
   static const Map<String, dynamic> pt = {
     title: 'AppTemplate',
     thisIs: 'Este app é um template de estudo para Flutter.',
-    welcome: 'Bem vindo',
+    welcome: 'Bem-vindo',
     emailAddress: 'Endereço de email',
     password: 'Senha',
     forgetPassword: 'Esqueceu a senha?',
     dontHaveAccount: 'Não possui uma conta?',
-    createNewAccount: 'Crie uma nova conta',
+    createNewAccount: 'Criar nova conta',
     signIn: 'Entrar',
   };
 
@@ -43,7 +43,7 @@ mixin AppTranslations {
     welcome: 'ようこそ',
     emailAddress: 'メールアドレス',
     password: 'パスワード',
-    forgetPassword: 'パスワードを忘れた',
+    forgetPassword: 'パスワードをお忘れですか？',
     dontHaveAccount: 'アカウントをお持ちでないですか？',
     createNewAccount: '新しいアカウントを作成',
     signIn: 'サインイン',
