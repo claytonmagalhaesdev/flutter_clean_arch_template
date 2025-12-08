@@ -62,8 +62,26 @@ jobs:
 
       - name: Chamar agente Tech Lead com o diff completo (POC)
         run: |
-          DIFF_CONTENT=$(cat pr.diff)
-          JSON_PAYLOAD=$(printf '{"code": "%s", "language": "diff", "context": "Diff completo da PR para revisão de alto nível."}' "$(echo "$DIFF_CONTENT" | sed 's/"/\\"/g')")
+          # Monta o JSON com Python pra evitar problema com quebras de linha e aspas
+          JSON_PAYLOAD=$(python - << 'PY'
+          import json
+          from pathlib import Path
+
+          diff = Path("pr.diff").read_text(encoding="utf-8")
+
+          payload = {
+              "code": diff,
+              "language": "diff",
+              "context": "Diff completo da PR para revisão de alto nível."
+          }
+
+          print(json.dumps(payload))
+          PY
+          )
+
+          echo "Payload montado, chamando /techlead/review-code ..."
+          echo "$JSON_PAYLOAD" | head -c 300
+          echo ""
 
           curl -s -X POST http://localhost:8000/techlead/review-code \
             -H "Content-Type: application/json" \
