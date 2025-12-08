@@ -1,0 +1,73 @@
+name: TechLead Review (PR)
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  techlead-review:
+    runs-on: self-hosted   # <- vai rodar no seu Ubuntu, não na nuvem da GitHub
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # precisamos do histórico para comparar base x head
+
+      - name: Descobrir arquivos .dart alterados na PR
+        run: |
+          echo "Base ref: ${{ github.base_ref }}"
+          echo "Head ref: ${{ github.head_ref }}"
+
+          # Busca a branch base (ex: main) para comparar
+          git fetch origin ${{ github.base_ref }} --depth=1
+
+          # Lista os arquivos alterados entre base e HEAD
+          git diff --name-only FETCH_HEAD...HEAD | grep '\.dart$' > changed_dart_files.txt || true
+
+          echo "Arquivos .dart alterados:"
+          cat changed_dart_files.txt || echo "Nenhum .dart alterado."
+
+      - name: Chamar agente Tech Lead para cada arquivo
+        run: |
+          if [ ! -s changed_dart_files.txt ]; then
+            echo "Nenhum arquivo .dart alterado, nada pra revisar."
+            exit 0
+          fi
+
+          BASE_DIR="$(pwd)"
+
+          while IFS= read -r file; do
+            ABS_PATH="$BASE_DIR/$file"
+            echo "===== Revisando: $file ====="
+
+            JSON_PAYLOAD=$(printf '{"path": "%s", "language": "dart", "context": "Revisão automática de PR para %s"}' "$ABS_PATH" "$file")
+
+            echo "Payload: $JSON_PAYLOAD"
+
+            # Chama seu serviço local
+            curl -s -X POST http://localhost:8000/techlead/review-file \
+              -H "Content-Type: application/json" \
+              -d "$JSON_PAYLOAD" \
+              || echo "Falha ao revisar $file"
+
+            echo ""
+          done < changed_dart_files.txt
+
+      - name: Gerar diff completo da PR
+        run: |
+          git fetch origin ${{ github.base_ref }} --depth=1
+          git diff FETCH_HEAD...HEAD > pr.diff
+          echo "Diff salvo em pr.diff (tamanho: $(wc -l < pr.diff) linhas)"
+
+      - name: Chamar agente Tech Lead com o diff completo (POC)
+        run: |
+          DIFF_CONTENT=$(cat pr.diff)
+          JSON_PAYLOAD=$(printf '{"code": "%s", "language": "diff", "context": "Diff completo da PR para revisão de alto nível."}' "$(echo "$DIFF_CONTENT" | sed 's/"/\\"/g')")
+
+          curl -s -X POST http://localhost:8000/techlead/review-code \
+            -H "Content-Type: application/json" \
+            -d "$JSON_PAYLOAD" \
+            || echo "Falha ao revisar diff da PR"
+
+
