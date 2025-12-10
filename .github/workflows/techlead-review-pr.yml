@@ -5,14 +5,14 @@ on:
     types: [opened, synchronize, reopened]
 
 jobs:
-  techlead-review:
-    runs-on: self-hosted   # <- vai rodar no seu Ubuntu, não na nuvem da GitHub
+  agents-review:
+    runs-on: self-hosted
 
     steps:
       - name: Checkout código
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0   # precisamos do histórico para comparar base x head
+          fetch-depth: 0
 
       - name: Descobrir arquivos .dart alterados na PR
         run: |
@@ -87,5 +87,34 @@ jobs:
             -H "Content-Type: application/json" \
             -d "$JSON_PAYLOAD" \
             || echo "Falha ao revisar diff da PR"
+
+      - name: Chamar agente QA para plano de testes da PR
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          JSON_PAYLOAD=$(python - << 'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          pr_title = os.environ.get("PR_TITLE", "") or ""
+          pr_body = os.environ.get("PR_BODY", "") or ""
+          diff = Path("pr.diff").read_text(encoding="utf-8")
+
+          payload = {
+              "pr_title": pr_title,
+              "pr_body": pr_body,
+              "diff": diff,
+              "context": "Gerar plano de testes (manuais e automatizados) para esta PR."
+          }
+
+          print(json.dumps(payload))
+          PY
+          )
+
+          curl -s -X POST http://localhost:8000/qa/pr-tests \
+            -H "Content-Type: application/json" \
+            -d "$JSON_PAYLOAD"
 
 
