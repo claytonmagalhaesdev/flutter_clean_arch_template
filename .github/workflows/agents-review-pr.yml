@@ -63,7 +63,7 @@ jobs:
       - name: Chamar agente Tech Lead com o diff completo (POC)
         run: |
           # Monta o JSON com Python pra evitar problema com quebras de linha e aspas
-          JSON_PAYLOAD=$(python - << 'PY'
+          JSON_PAYLOAD=$(python3 - << 'PY'
           import json
           from pathlib import Path
 
@@ -93,7 +93,7 @@ jobs:
           PR_TITLE: ${{ github.event.pull_request.title }}
           PR_BODY: ${{ github.event.pull_request.body }}
         run: |
-          JSON_PAYLOAD=$(python - << 'PY'
+          JSON_PAYLOAD=$(python3 - << 'PY'
           import json
           import os
           from pathlib import Path
