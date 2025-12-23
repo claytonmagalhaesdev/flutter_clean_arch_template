@@ -62,31 +62,28 @@ jobs:
 
       - name: Chamar agente Tech Lead com o diff completo (POC)
         run: |
-          # Monta o JSON com Python pra evitar problema com quebras de linha e aspas
-          JSON_PAYLOAD=$(python3 - << 'PY'
+          python3 - << 'PY'
           import json
           from pathlib import Path
-
+      
           diff = Path("pr.diff").read_text(encoding="utf-8")
-
           payload = {
               "code": diff,
               "language": "diff",
               "context": "Diff completo da PR para revisão de alto nível."
           }
-
-          print(json.dumps(payload))
-          PY
+          Path("payload_diff.json").write_text(
+              json.dumps(payload, ensure_ascii=False),
+              encoding="utf-8"
           )
-
-          echo "Payload montado, chamando /techlead/review-code ..."
-          echo "$JSON_PAYLOAD" | head -c 300
-          echo ""
-
+          print("payload_diff.json bytes:", Path("payload_diff.json").stat().st_size)
+          PY
+      
+          python3 -m json.tool payload_diff.json > /dev/null
+      
           curl -s -X POST http://localhost:8000/techlead/review-code \
             -H "Content-Type: application/json" \
-            -d "$JSON_PAYLOAD" \
-            || echo "Falha ao revisar diff da PR"
+            --data-binary @payload_diff.json
 
       - name: Chamar agente QA para plano de testes da PR
         env:
