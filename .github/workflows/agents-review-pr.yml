@@ -15,18 +15,24 @@ jobs:
           fetch-depth: 0
 
       - name: Descobrir arquivos .dart alterados na PR
+        shell: bash
         run: |
-          echo "Base ref: ${{ github.base_ref }}"
-          echo "Head ref: ${{ github.head_ref }}"
-
-          # Busca a branch base (ex: main) para comparar
-          git fetch origin ${{ github.base_ref }} --depth=1
-
-          # Lista os arquivos alterados entre base e HEAD
-          git diff --name-only FETCH_HEAD...HEAD | grep '\.dart$' > changed_dart_files.txt || true
-
+          set -euo pipefail
+      
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+      
+          echo "Base SHA: $BASE_SHA"
+          echo "Head SHA: $HEAD_SHA"
+      
+          git fetch origin "$BASE_SHA" --depth=1 || true
+          git fetch origin "$HEAD_SHA" --depth=1 || true
+      
+          git diff --name-only "$BASE_SHA" "$HEAD_SHA" | grep '\.dart$' > changed_dart_files.txt || true
+      
           echo "Arquivos .dart alterados:"
           cat changed_dart_files.txt || echo "Nenhum .dart alterado."
+
 
       - name: Chamar agente Tech Lead para cada arquivo
         run: |
@@ -55,9 +61,17 @@ jobs:
           done < changed_dart_files.txt
 
       - name: Gerar diff completo da PR
+        shell: bash
         run: |
-          git fetch origin ${{ github.base_ref }} --depth=1
-          git diff FETCH_HEAD...HEAD > pr.diff
+          set -euo pipefail
+      
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+      
+          git fetch origin "$BASE_SHA" --depth=1 || true
+          git fetch origin "$HEAD_SHA" --depth=1 || true
+      
+          git diff "$BASE_SHA" "$HEAD_SHA" > pr.diff
           echo "Diff salvo em pr.diff (tamanho: $(wc -l < pr.diff) linhas)"
 
       - name: Chamar agente Tech Lead com o diff completo (POC)
