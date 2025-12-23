@@ -1,4 +1,4 @@
-name: TechLead Review (PR)
+name: Agents Review (PR)
 
 on:
   pull_request:
