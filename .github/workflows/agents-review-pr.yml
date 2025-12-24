@@ -1,4 +1,4 @@
-name: TechLead Review (PR)
+name: Agents Review (PR)
 
 on:
   pull_request:
@@ -15,18 +15,24 @@ jobs:
           fetch-depth: 0
 
       - name: Descobrir arquivos .dart alterados na PR
+        shell: bash
         run: |
-          echo "Base ref: ${{ github.base_ref }}"
-          echo "Head ref: ${{ github.head_ref }}"
-
-          # Busca a branch base (ex: main) para comparar
-          git fetch origin ${{ github.base_ref }} --depth=1
-
-          # Lista os arquivos alterados entre base e HEAD
-          git diff --name-only FETCH_HEAD...HEAD | grep '\.dart$' > changed_dart_files.txt || true
-
+          set -euo pipefail
+      
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+      
+          echo "Base SHA: $BASE_SHA"
+          echo "Head SHA: $HEAD_SHA"
+      
+          git fetch origin "$BASE_SHA" --depth=1 || true
+          git fetch origin "$HEAD_SHA" --depth=1 || true
+      
+          git diff --name-only "$BASE_SHA" "$HEAD_SHA" | grep '\.dart$' > changed_dart_files.txt || true
+      
           echo "Arquivos .dart alterados:"
           cat changed_dart_files.txt || echo "Nenhum .dart alterado."
+
 
       - name: Chamar agente Tech Lead para cada arquivo
         run: |
@@ -55,38 +61,43 @@ jobs:
           done < changed_dart_files.txt
 
       - name: Gerar diff completo da PR
+        shell: bash
         run: |
-          git fetch origin ${{ github.base_ref }} --depth=1
-          git diff FETCH_HEAD...HEAD > pr.diff
+          set -euo pipefail
+      
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+      
+          git fetch origin "$BASE_SHA" --depth=1 || true
+          git fetch origin "$HEAD_SHA" --depth=1 || true
+      
+          git diff "$BASE_SHA" "$HEAD_SHA" > pr.diff
           echo "Diff salvo em pr.diff (tamanho: $(wc -l < pr.diff) linhas)"
 
       - name: Chamar agente Tech Lead com o diff completo (POC)
         run: |
-          # Monta o JSON com Python pra evitar problema com quebras de linha e aspas
-          JSON_PAYLOAD=$(python3 - << 'PY'
+          python3 - << 'PY'
           import json
           from pathlib import Path
-
+      
           diff = Path("pr.diff").read_text(encoding="utf-8")
-
           payload = {
               "code": diff,
               "language": "diff",
               "context": "Diff completo da PR para revisão de alto nível."
           }
-
-          print(json.dumps(payload))
-          PY
+          Path("payload_diff.json").write_text(
+              json.dumps(payload, ensure_ascii=False),
+              encoding="utf-8"
           )
-
-          echo "Payload montado, chamando /techlead/review-code ..."
-          echo "$JSON_PAYLOAD" | head -c 300
-          echo ""
-
+          print("payload_diff.json bytes:", Path("payload_diff.json").stat().st_size)
+          PY
+      
+          python3 -m json.tool payload_diff.json > /dev/null
+      
           curl -s -X POST http://localhost:8000/techlead/review-code \
             -H "Content-Type: application/json" \
-            -d "$JSON_PAYLOAD" \
-            || echo "Falha ao revisar diff da PR"
+            --data-binary @payload_diff.json
 
       - name: Chamar agente QA para plano de testes da PR
         env:
