@@ -51,11 +51,25 @@ jobs:
 
             echo "Payload: $JSON_PAYLOAD"
 
-            # Chama seu serviço local
+            JSON_PAYLOAD=$(python3 - << PY
+            import json
+            import sys
+            payload = {
+              "path": "${ABS_PATH}",
+              "language": "dart",
+              "context": "Revisão automática de PR para ${file}"
+            }
+            print(json.dumps(payload, ensure_ascii=False))
+            PY
+            )
+
+            OUT="agent_outputs/techlead_files/$(echo "$file" | tr '/\' '__').json"
+            echo "$JSON_PAYLOAD" > "${OUT%.json}.payload.json"
+
             curl -s -X POST http://localhost:8000/techlead/review-file \
               -H "Content-Type: application/json" \
-              -d "$JSON_PAYLOAD" \
-              || echo "Falha ao revisar $file"
+              --data-binary "$JSON_PAYLOAD" \
+              | tee "$OUT"
 
             echo ""
           done < changed_dart_files.txt
@@ -127,5 +141,12 @@ jobs:
           curl -s -X POST http://localhost:8000/qa/pr-tests \
             -H "Content-Type: application/json" \
             -d "$JSON_PAYLOAD"
+
+      - name: Upload outputs (TechLead/QA)
+        uses: actions/upload-artifact@v4
+        with:
+          name: agent_outputs
+          path: agent_outputs/
+
 
 
