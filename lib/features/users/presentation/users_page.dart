@@ -61,6 +61,29 @@ class _UsersPageState extends State<UsersPage> {
           );
         },
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => MaterialPageRoute(
+          builder: (_) => buildFormUser(),
+        ),
+        child: const Icon(Icons.refresh),
+      ),
+    );
+  }
+
+  Widget buildFormUser() {
+    return Column(
+      children: [
+        TextField(
+          decoration: const InputDecoration(labelText: 'Nome'),
+        ),
+        TextField(
+          decoration: const InputDecoration(labelText: 'Email'),
+        ),
+        ElevatedButton(
+          onPressed: () {},
+          child: const Text('Salvar'),
+        ),
+      ],
     );
   }
 
