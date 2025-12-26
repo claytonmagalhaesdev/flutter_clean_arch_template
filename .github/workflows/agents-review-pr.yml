@@ -35,7 +35,12 @@ jobs:
 
 
       - name: Chamar agente Tech Lead para cada arquivo
+        shell: bash
         run: |
+          set -euo pipefail
+
+          mkdir -p agent_outputs/techlead_files
+
           if [ ! -s changed_dart_files.txt ]; then
             echo "Nenhum arquivo .dart alterado, nada pra revisar."
             exit 0
@@ -47,21 +52,7 @@ jobs:
             ABS_PATH="$BASE_DIR/$file"
             echo "===== Revisando: $file ====="
 
-            JSON_PAYLOAD=$(printf '{"path": "%s", "language": "dart", "context": "Revisão automática de PR para %s"}' "$ABS_PATH" "$file")
-
-            echo "Payload: $JSON_PAYLOAD"
-
-            JSON_PAYLOAD=$(python3 - << PY
-            import json
-            import sys
-            payload = {
-              "path": "${ABS_PATH}",
-              "language": "dart",
-              "context": "Revisão automática de PR para ${file}"
-            }
-            print(json.dumps(payload, ensure_ascii=False))
-            PY
-            )
+            JSON_PAYLOAD=$(python3 -c 'import json,sys; path=sys.argv[1]; f=sys.argv[2]; payload={"path":path,"language":"dart","context":f"Revisão automática de PR para {f}"}; print(json.dumps(payload, ensure_ascii=False))' "$ABS_PATH" "$file")
 
             OUT="agent_outputs/techlead_files/$(echo "$file" | tr '/\' '__').json"
             echo "$JSON_PAYLOAD" > "${OUT%.json}.payload.json"
