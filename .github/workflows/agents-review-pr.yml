@@ -54,10 +54,13 @@ jobs:
 
             JSON_PAYLOAD=$(python3 -c 'import json,sys; path=sys.argv[1]; f=sys.argv[2]; payload={"path":path,"language":"dart","context":f"Revisão automática de PR para {f}"}; print(json.dumps(payload, ensure_ascii=False))' "$ABS_PATH" "$file")
 
-            OUT="agent_outputs/techlead_files/$(echo "$file" | tr '/\' '__').json"
+            SAFE_NAME="$(echo "$file" | sed 's#[/\\]#__#g')"
+            OUT="agent_outputs/techlead_files/${SAFE_NAME}.json"
+
             echo "$JSON_PAYLOAD" > "${OUT%.json}.payload.json"
 
-            curl -s -X POST http://localhost:8000/techlead/review-file \
+            curl -sS -D "${OUT%.json}.headers.txt" \
+              -X POST http://localhost:8000/techlead/review-file \
               -H "Content-Type: application/json" \
               --data-binary "$JSON_PAYLOAD" \
               | tee "$OUT"
